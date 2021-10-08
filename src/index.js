@@ -2,30 +2,106 @@
 
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
-
 import '../assets/application.scss';
+import React, { Suspense, useState } from 'react';
+import ReactDOM from 'react-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
+import './i18n.js';
+import { store } from './app/store.js';
+import { Provider } from 'react-redux';
+import { Container } from 'react-bootstrap';
+import Main from './Main.jsx';
+import AuthPage from './AuthPage.jsx';
+import SignUp from './SignUp.jsx';
+import NotFoundPage from './NotFoundPage.jsx';
+import authContext from './contexts/index.jsx';
+import useAuth from './hooks/index.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const p = document.createElement('p');
-p.classList.add('card-text');
-p.textContent = 'It works!';
+const rollbarConfig = {
+  accessToken: "66038ab5112a4fb29bd26c74560fba52",
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+      environment: "production"
+  }
+};
 
-const h5 = document.createElement('h5');
-h5.classList.add('card-title');
-h5.textContent = 'Project frontend l4 boilerplate';
+const AuthProvider = ({ children }) => {
+  const isAuthorized = localStorage.getItem('token');
+  const [ loggedIn, setLoggedIn ] = useState(isAuthorized);
+  const logIn = (token) => {
+    localStorage.setItem('token', token);
+    setLoggedIn(true);
+  };
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+  };
 
-const cardBody = document.createElement('div');
-cardBody.classList.add('card-body');
-cardBody.append(h5, p);
+  return (
+    <authContext.Provider value={{ loggedIn, logIn, logOut }}>
+      {children}
+    </authContext.Provider>
+  );
+};
 
-const card = document.createElement('div');
-card.classList.add('card', 'text-center');
-card.append(cardBody);
+const LoggedInRoute = ({ children }) => {
+  const auth = useAuth();
 
-const container = document.querySelector('#chat');
-container.append(card);
+  return (
+    <Route
+      render={() => 
+        auth.loggedIn ? (
+          children
+        ) :
+        (
+          <Redirect to='/login' />
+        )
+      }
+    >
+    </Route>
+  );
+};
 
-console.log('it works!');
+const Chat = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <Switch>
+          <LoggedInRoute exact path='/'>
+            <Main />
+          </LoggedInRoute>
+          <Route exact path='/login'>
+            <AuthPage />
+          </Route>
+          <Route exact path='/signup'>
+            <SignUp />
+          </Route>
+          <Route path='*'>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      </Router>
+    </AuthProvider>
+  );
+};
+
+const appContainer = document.querySelector('#chat');
+ReactDOM.render(
+  <Suspense fallback="loading">
+    <Provider store={store}>
+      <Chat />
+    </Provider>
+  </Suspense>,
+  appContainer
+);

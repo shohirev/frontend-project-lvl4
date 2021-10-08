@@ -1,0 +1,60 @@
+{
+  "header": {
+    "title": "Hexlet Chat",
+    "logOutBtn": "Выйти"
+  },
+  "authPage": {
+    "title": "Войти",
+    "placeholders": {
+      "username": "Ваш ник",
+      "password": "Пароль"
+    },
+    "logInBtn": "Войти",
+    "signUpLink": "Регистрация",
+    "signUpGreeting": "Нет аккаунта?"
+  },
+  "signUpPage": {
+    "title": "Регистрация",
+    "placeholders": {
+      "username": "Имя пользователя",
+      "password": "Пароль",
+      "confirmPassword": "Подтвердите пароль"
+    },
+    "signUpBtn": "Зарегистрироваться",
+    "validationErrors": {
+      "username": "От 3 до 20 символов",
+      "password": "Не менее 6 символов",
+      "confirmPassword": "Пароли должны совпадать"
+    }
+  },
+  "channelsPanel": {
+    "title": "Каналы",
+    "renameBtn": "Переименовать",
+    "removeBtn": "Удалить"
+  },
+  "chatInput": {
+    "placeholder": "Введите сообщение..."
+  },
+  "modals": {
+    "add": {
+      "title": "Добавить канал",
+      "cancelBtn": "Отменить",
+      "sendBtn": "Добавить"
+    },
+    "rename": {
+      "title": "Переименовать канал",
+      "cancelBtn": "Отменить",
+      "sendBtn": "Переименовать"
+    },
+    "remove": {
+      "title": "Удалить канал",
+      "insurance": "Уверены?",
+      "cancelBtn": "Отменить",
+      "removeBtn": "Удалить"
+    }
+  },
+  "errors": {
+    "autorization": "Неверное имя пользователя или пароль",
+    "userDuplication": "Такой пользователь уже существует"
+  }
+}
