@@ -5,7 +5,8 @@
   "jest": {
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
-    }
+    },
+    "transformIgnorePatterns": ["/node_modules/", "\\.pnp\\.[^\\\/]+$"]
   },
   "main": "server/index.js",
   "type": "module",
