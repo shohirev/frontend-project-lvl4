@@ -6,7 +6,7 @@
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     },
-    "transformIgnorePatterns": ["/node_modules/", "\\.pnp\\.[^\\\/]+$"]
+    "transformIgnorePatterns": ["\\.pnp\\.[^\\\/]+$"]
   },
   "main": "server/index.js",
   "type": "module",
