@@ -21,6 +21,7 @@ const rollbarConfig = {
 };
 
 const init = () => {
+  console.log(document)
   const appContainer = document.querySelector('#chat');
   ReactDOM.render(
     <App />,
