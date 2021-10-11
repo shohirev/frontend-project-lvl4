@@ -20,14 +20,17 @@ const rollbarConfig = {
   }
 };
 
-const init = () => {
-  console.log(document.body.outerHTML)
-  console.log('environment', process.env.NODE_ENV)
+const init = (socketClient) => {
   const appContainer = document.querySelector('#chat');
-  ReactDOM.render(
-    <App />,
-    appContainer
-  );
+
+  if (appContainer) {
+    ReactDOM.render(
+      <App />,
+      appContainer
+    );
+    return;
+  }
+  return <App />
 };
 
 export default init;
