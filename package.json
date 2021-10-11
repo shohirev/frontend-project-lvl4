@@ -2,6 +2,14 @@
   "name": "@hexlet/code",
   "version": "0.0.1",
   "description": "",
+  "jest": {
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "\\.pnp\\.[^\\/]+$"
+    ]
+  },
   "main": "server/index.js",
   "type": "module",
   "engines": {
@@ -15,8 +23,7 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest",
-      "extensionsToTreatAsEsm": [".jsx"]
+      "^.+\\.[t|j]sx?$": "babel-jest"
     }
   },
   "author": "shohirev",
