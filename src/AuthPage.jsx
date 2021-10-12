@@ -44,7 +44,6 @@ const AuthorizationForm = () => {
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
         <FloatingLabel
-          label={t('authPage.placeholders.username')}
           htmlFor="username"
           className="mb-3"
         >
@@ -52,6 +51,7 @@ const AuthorizationForm = () => {
             id="username"
             name="username"
             placeholder={t('authPage.placeholders.username')}
+            aria-labelledby="floatingUsername"
             onChange={formik.handleChange}
             isInvalid={authFailed}
             required
@@ -61,7 +61,6 @@ const AuthorizationForm = () => {
       </Form.Group>
       <Form.Group>
         <FloatingLabel
-          label={t('authPage.placeholders.password')}
           htmlFor="password"
           className="mb-3"
         >
@@ -69,6 +68,7 @@ const AuthorizationForm = () => {
             id="password"
             name="password"
             placeholder={t('authPage.placeholders.password')}
+            aria-labelledby="floatingPassword"
             isInvalid={authFailed}
             onChange={formik.handleChange}
             required
