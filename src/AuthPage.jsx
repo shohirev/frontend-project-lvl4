@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Form, FloatingLabel, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -44,29 +43,39 @@ const AuthorizationForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <Form.Control
-          id="username"
-          name="username"
-          placeholder={t('authPage.placeholders.username')}
-          onChange={formik.handleChange}
-          isInvalid={authFailed}
-          required
-          value={formik.values.username}
-        />
+        <FloatingLabel
+          label={t('authPage.placeholders.username')}
+          className="mb-3"
+        >
+          <Form.Control
+            id="username"
+            name="username"
+            placeholder={t('authPage.placeholders.username')}
+            onChange={formik.handleChange}
+            isInvalid={authFailed}
+            required
+            value={formik.values.username}
+          />
+        </FloatingLabel>
       </Form.Group>
       <Form.Group>
-        <Form.Control
-          id="password"
-          name="password"
-          placeholder={t('authPage.placeholders.password')}
-          isInvalid={authFailed}
-          onChange={formik.handleChange}
-          required
-          value={formik.values.password}
-        />
-        <Form.Control.Feedback type="invalid">
-          {t('errors.authorization')}
-        </Form.Control.Feedback>
+        <FloatingLabel
+          label={t('authPage.placeholders.password')}
+          className="mb-3"
+        >
+          <Form.Control
+            id="password"
+            name="password"
+            placeholder={t('authPage.placeholders.password')}
+            isInvalid={authFailed}
+            onChange={formik.handleChange}
+            required
+            value={formik.values.password}
+          />
+          <Form.Control.Feedback type="invalid">
+            {t('errors.authorization')}
+          </Form.Control.Feedback>
+        </FloatingLabel>
       </Form.Group>
       <Button type="submit">{t("authPage.logInBtn")}</Button>
     </Form>

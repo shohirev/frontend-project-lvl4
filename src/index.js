@@ -30,7 +30,7 @@ const init = (socketClient) => {
     );
     return;
   }
-  return <App />
+  return <App socket={socketClient}/>;
 };
 
 export default init;
