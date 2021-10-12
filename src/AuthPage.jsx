@@ -44,12 +44,11 @@ const AuthorizationForm = () => {
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
         <FloatingLabel
-          controlId="username"
+          controlId="floatingUsername"
           label={t('authPage.placeholders.username')}
           className="mb-3"
         >
           <Form.Control
-            id="username"
             name="username"
             placeholder={t('authPage.placeholders.username')}
             aria-labelledby="floatingUsername"
@@ -62,12 +61,11 @@ const AuthorizationForm = () => {
       </Form.Group>
       <Form.Group>
         <FloatingLabel
-          controlId="password"
+          controlId="floatingPassword"
           label={t('authPage.placeholders.password')}
           className="mb-3"
         >
           <Form.Control
-            id="password"
             name="password"
             placeholder={t('authPage.placeholders.password')}
             aria-labelledby="floatingPassword"
