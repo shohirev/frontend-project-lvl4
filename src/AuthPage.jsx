@@ -45,6 +45,7 @@ const AuthorizationForm = () => {
       <Form.Group>
         <FloatingLabel
           label={t('authPage.placeholders.username')}
+          htmlFor="username"
           className="mb-3"
         >
           <Form.Control
@@ -61,6 +62,7 @@ const AuthorizationForm = () => {
       <Form.Group>
         <FloatingLabel
           label={t('authPage.placeholders.password')}
+          htmlFor="password"
           className="mb-3"
         >
           <Form.Control
