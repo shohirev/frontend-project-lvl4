@@ -43,41 +43,35 @@ const AuthorizationForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <FloatingLabel
-          controlId="floatingUsername"
-          label={t('authPage.placeholders.username')}
-          className="mb-3"
-        >
+        <Form.Floating className="mb-3">
           <Form.Control
+            id="username"
             name="username"
             placeholder={t('authPage.placeholders.username')}
-            aria-labelledby="floatingUsername"
             onChange={formik.handleChange}
             isInvalid={authFailed}
             required
             value={formik.values.username}
           />
-        </FloatingLabel>
+          <label htmlFor="username">{t('authPage.placeholders.username')}</label>
+        </Form.Floating>
       </Form.Group>
       <Form.Group>
-        <FloatingLabel
-          controlId="floatingPassword"
-          label={t('authPage.placeholders.password')}
-          className="mb-3"
-        >
+        <Form.Floating className="mb-3">
           <Form.Control
+            id="password"
             name="password"
             placeholder={t('authPage.placeholders.password')}
-            aria-labelledby="floatingPassword"
             isInvalid={authFailed}
             onChange={formik.handleChange}
             required
             value={formik.values.password}
           />
+          <label htmlFor="password">{t('authPage.placeholders.password')}</label>
           <Form.Control.Feedback type="invalid">
             {t('errors.authorization')}
           </Form.Control.Feedback>
-        </FloatingLabel>
+        </Form.Floating>
       </Form.Group>
       <Button type="submit">{t("authPage.logInBtn")}</Button>
     </Form>
