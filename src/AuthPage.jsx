@@ -44,8 +44,8 @@ const AuthorizationForm = () => {
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
         <FloatingLabel
+          controlId="username"
           label={t('authPage.placeholders.username')}
-          htmlFor="username"
           className="mb-3"
         >
           <Form.Control
@@ -62,8 +62,8 @@ const AuthorizationForm = () => {
       </Form.Group>
       <Form.Group>
         <FloatingLabel
+          controlId="password"
           label={t('authPage.placeholders.password')}
-          htmlFor="password"
           className="mb-3"
         >
           <Form.Control
