@@ -40,6 +40,12 @@ const AuthorizationForm = () => {
     },
   });
 
+  const feedback = authFailed ? (
+      <Form.Control.Feedback type="invalid" tooltip>
+        {t('errors.authorization')}
+      </Form.Control.Feedback>
+    ) : null;
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
@@ -68,9 +74,7 @@ const AuthorizationForm = () => {
             value={formik.values.password}
           />
           <label htmlFor="password">{t('authPage.placeholders.password')}</label>
-          <Form.Control.Feedback type="invalid">
-            {t('errors.authorization')}
-          </Form.Control.Feedback>
+          {feedback}
         </Form.Floating>
       </Form.Group>
       <Button type="submit">{t("authPage.logInBtn")}</Button>
