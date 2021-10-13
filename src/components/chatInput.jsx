@@ -23,11 +23,11 @@ const ChatInput = ({ socket }) => {
         data-testid="new-message"
         aria-describedby="newMessageBtn"
       />
-      <ArrowRightSquare
-        role="button"
-        variant="outline-secondary"
-        onClick={sendMessage}
-      />
+      <Button variant="outline-secondary" onClick={sendMessage}>
+        <ArrowRightSquare
+          variant="outline-secondary"
+        />
+      </Button>
     </InputGroup>
   );
 };
