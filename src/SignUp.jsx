@@ -15,9 +15,13 @@ const SignUpForm = () => {
   const history = useHistory();
 
   const schema = yup.object().shape({
-    username: yup.string().min(3).max(20).required(t('signUpPage.validationErrors.username')),
-    password: yup.string().min(6).required(t('signUpPage.validationErrors.password')),
-    confirmPassword: yup.string().oneOf([yup.ref('password')]).required(t('signUpPage.validationErrors.confirmPassword')),
+    username: yup.string().min(3, t('signUpPage.validationErrors.username'))
+                          .max(20, t('signUpPage.validationErrors.username'))
+                          .required(t('signUpPage.validationErrors.requiredField')),
+    password: yup.string().min(6, t('signUpPage.validationErrors.password'))
+                          .required(t('signUpPage.validationErrors.requiredField')),
+    confirmPassword: yup.string().oneOf([yup.ref('password')], t('signUpPage.validationErrors.confirmPassword'))
+                                 .required(t('signUpPage.validationErrors.requiredField')),
     });
 
   const handler = async (values, actions) => {
