@@ -10,8 +10,8 @@ const ChatInput = ({ socket }) => {
   const currentChannel = useSelector((state) => state.activeChannelId);
 
   const sendMessage = () => {
-    setMessageText('');
     socket.emit('newMessage', {text: messageText, channelId: currentChannel});
+    setMessageText('');
   };
 
   return (
