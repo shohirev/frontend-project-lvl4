@@ -29,7 +29,7 @@ const ChatInput = ({ socket }) => {
         variant="outline-secondary"
         onClick={sendMessage}
       >
-        <ArrowRightSquare/>
+      Отправить
       </Button>
     </InputGroup>
   );
