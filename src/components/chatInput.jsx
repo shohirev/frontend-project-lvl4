@@ -23,11 +23,12 @@ const ChatInput = ({ socket }) => {
         data-testid="new-message"
         aria-describedby="newMessageBtn"
       />
-      <Button variant="outline-secondary" onClick={sendMessage}>
-        <ArrowRightSquare
-          variant="outline-secondary"
-        />
-      </Button>
+      <ArrowRightSquare
+        role="button"
+        name={t('chatInput.sendMessageBtn')}
+        variant="outline-secondary"
+        onClick={sendMessage}
+      />
     </InputGroup>
   );
 };

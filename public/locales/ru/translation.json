@@ -34,7 +34,8 @@
     "removeBtn": "Удалить"
   },
   "chatInput": {
-    "placeholder": "Введите сообщение..."
+    "placeholder": "Введите сообщение...",
+    "sendMessageBtn": "Отправить"
   },
   "modals": {
     "add": {
