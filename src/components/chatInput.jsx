@@ -24,7 +24,7 @@ const ChatInput = ({ socket }) => {
         aria-describedby="newMessageBtn"
       />
       <Button
-        type="button"
+        role="button"
         name={t('chatInput.sendMessageBtn')}
         variant="outline-secondary"
         onClick={sendMessage}
