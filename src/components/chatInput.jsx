@@ -24,6 +24,7 @@ const ChatInput = ({ socket }) => {
         aria-describedby="newMessageBtn"
       />
       <ArrowRightSquare
+        role="button"
         variant="outline-secondary"
         onClick={sendMessage}
       />

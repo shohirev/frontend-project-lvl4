@@ -76,7 +76,7 @@ const SignUpForm = () => {
               isInvalid={touched.username && errors.username}
             />
             <label htmlFor="username">{t('signUpPage.placeholders.username')}</label>
-            <Form.Control.Feedback type="invalid">
+            <Form.Control.Feedback type="invalid" tooltip>
               {errors.username}
             </Form.Control.Feedback>
           </Form.Floating>
@@ -95,7 +95,7 @@ const SignUpForm = () => {
                 isInvalid={touched.password && errors.password}
               />
               <label htmlFor="password">{t('signUpPage.placeholders.password')}</label>
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid" tooltip>
                 {errors.password}
               </Form.Control.Feedback>
             </Form.Floating>
@@ -114,7 +114,7 @@ const SignUpForm = () => {
                 isInvalid={touched.confirmPassword && errors.confirmPassword}
               />
               <label htmlFor="confirmPassword">{t('signUpPage.placeholders.confirmPassword')}</label>
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type="invalid" tooltip>
                 {errors.confirmPassword}
               </Form.Control.Feedback>
             </Form.Floating>
