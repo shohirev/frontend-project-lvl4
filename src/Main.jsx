@@ -14,6 +14,7 @@ import { useSocket } from './hooks/index.jsx';
 const Main = () => {
   const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
+  console.log('messages', messages)
   const activeChannelId = useSelector((state) => state.activeChannelId);
 
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const Main = () => {
   });
 
   socket.on('newMessage', (m) => {
+    console.log('new message is acknoledged!!', m)
     dispatch(addingNewMessage(m));
   });
 
