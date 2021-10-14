@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import socket from '../../socket/index.js';
+import { useSocket } from '../../hooks/index.jsx';
 
 const RenameChannel = ({ id, onHide }) => {
   const { t } = useTranslation();
   const channels = useSelector((state) => state.channels);
+  const socket = useSocket();
   const currentChannel = channels.find((c) => c.id === id);
   const [newName, setNewName] = useState(currentChannel.name);
   const [isInvalidName, setIsInvalidName] = useState(null);

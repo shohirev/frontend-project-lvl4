@@ -15,8 +15,8 @@ import Main from './Main.jsx';
 import AuthPage from './AuthPage.jsx';
 import SignUp from './SignUp.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
-import authContext from './contexts/index.jsx';
-import useAuth from './hooks/index.jsx';
+import { authContext, socketContext } from './contexts/index.jsx';
+import { useAuth } from './hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const isAuthorized = localStorage.getItem('token');
@@ -55,27 +55,29 @@ const LoggedInRoute = ({ children }) => {
   );
 };
 
-const Chat = () => {
+const Chat = ({socket}) => {
   return (
     <Suspense fallback="loading">
       <Provider store={store}>
         <AuthProvider>
-          <Router>
-            <Switch>
-              <LoggedInRoute exact path='/'>
-                <Main />
-              </LoggedInRoute>
-              <Route exact path='/login'>
-                <AuthPage />
-              </Route>
-              <Route exact path='/signup'>
-                <SignUp />
-              </Route>
-              <Route path='*'>
-                <NotFoundPage />
-              </Route>
-            </Switch>
-          </Router>
+          <socketContext.Provider value={socket}>
+            <Router>
+              <Switch>
+                <LoggedInRoute exact path='/'>
+                  <Main />
+                </LoggedInRoute>
+                <Route exact path='/login'>
+                  <AuthPage />
+                </Route>
+                <Route exact path='/signup'>
+                  <SignUp />
+                </Route>
+                <Route path='*'>
+                  <NotFoundPage />
+                </Route>
+              </Switch>
+            </Router>
+          </socketContext.Provider>
         </AuthProvider>
       </Provider>
     </Suspense>

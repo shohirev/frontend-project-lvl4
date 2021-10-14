@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Navbar, Button } from 'react-bootstrap';
 import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 
 export default () => {
   const { t } = useTranslation();

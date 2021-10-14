@@ -5,11 +5,12 @@ import { loadingChannels, addingNewChannel, renamingChannel, removingChannel } f
 import { addingMessages, addingNewMessage } from './features/messagesSlice.js';
 import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 import axios from 'axios';
-import socket from './socket/index.js';
+//import socket from './socket/index.js';
 import routes from './routes.js';
 import Header from './components/header.jsx';
 import ChatInput from './components/chatInput.jsx';
 import ChannelsPanel from './components/channelsPanel.jsx';
+import { useSocket } from './hooks/index.jsx';
 
 const Main = () => {
   const channels = useSelector((state) => state.channels);
@@ -33,6 +34,8 @@ const Main = () => {
     }
   }, []);
 
+  const socket = useSocket();
+  
   socket.on('newChannel', (newChannel) => {
     dispatch(addingNewChannel(newChannel));
     dispatch(changingActiveChannelId(newChannel.id));

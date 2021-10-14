@@ -5,6 +5,7 @@ import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { io } from 'socket.io-client';
 import App from './App.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -20,12 +21,12 @@ const rollbarConfig = {
   }
 };
 
-const init = (socketClient) => {
+export const init = (socketClient) => {
   const appContainer = document.querySelector('#chat');
 
   if (appContainer) {
     ReactDOM.render(
-      <App />,
+      <App socket={socketClient}/>,
       appContainer
     );
     return;
@@ -33,6 +34,7 @@ const init = (socketClient) => {
   return <App socket={socketClient}/>;
 };
 
-export default init;
-
-init();
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
+  let socket = io();
+  init(socket);
+}

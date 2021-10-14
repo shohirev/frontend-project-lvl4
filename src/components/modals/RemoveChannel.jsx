@@ -1,10 +1,12 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import socket from '../../socket/index.js';
+import { useSocket } from '../../hooks/index.jsx';
 
 const RemoveChannel = ({ id, onHide }) => {
   const { t } = useTranslation();
+  const socket = useSocket();
+  
   const remove = () => {
     onHide();
     socket.emit('removeChannel', {id});

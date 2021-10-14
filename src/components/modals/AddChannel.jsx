@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import socket from '../../socket/index.js';
+import { useSocket } from '../../hooks/index.jsx';
 
 const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
   const [channelName, setChannelName] = useState('');
   const [isInvalidName, setIsInvalidName] = useState(null);
   const channels = useSelector((state) => state.channels);
+  const socket = useSocket();
 
   const handleSubmit = (e) => {
     e.preventDefault();
