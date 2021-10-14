@@ -12,7 +12,7 @@ const ChatInput = ({ socket }) => {
   const currentChannel = useSelector((state) => state.activeChannelId);
 
   const sendMessage = () => {
-    socket.emit('newMessage', {text: messageText, channelId: currentChannel});
+    socket.emit('newMessage', {text: messageText, channelId: currentChannel}, () => { console.log('ack!!') });
     setMessageText('');
   };
 
