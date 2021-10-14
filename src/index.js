@@ -21,7 +21,7 @@ const rollbarConfig = {
   }
 };
 
-export const init = (socketClient) => {
+const init = (socketClient) => {
   const appContainer = document.querySelector('#chat');
 
   if (appContainer) {
@@ -38,3 +38,5 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'producti
   let socket = io();
   init(socket);
 }
+
+export default init;
