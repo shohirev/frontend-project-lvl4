@@ -16,11 +16,11 @@ export const messagesSlice = createSlice({
       return state;
     },
     addingNewMessage: (state, action) => {
-      console.log('adding new message!!', action.payload)
       const newMessage = action.payload;
-      if(!state.find((m) => m.id === newMessage.id)) {
+      /*if(!state.find((m) => m.id === newMessage.id)) {
         state.push(newMessage);
-      }
+      }*/
+      state.push(newMessage);
       return state;
     }
   },
