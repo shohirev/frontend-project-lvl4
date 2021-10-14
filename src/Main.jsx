@@ -14,6 +14,7 @@ import { useSocket } from './hooks/index.jsx';
 const Main = () => {
   const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
+  console.log('messages', messages)
   const activeChannelId = useSelector((state) => state.activeChannelId);
 
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const Main = () => {
   });
 
   const messagesList = messages.filter((message) => message.channelId === activeChannelId)
-    .map((message) => { console.log('message', message); return <li key={message.id}>{message.text}</li> });
+    .map((message) => { return <li key={message.id}>{message.text}</li> });
 
   return (
     <div>
