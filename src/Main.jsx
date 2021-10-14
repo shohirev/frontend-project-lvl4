@@ -51,7 +51,6 @@ const Main = () => {
   });
 
   socket.on('newMessage', (m) => {
-    console.log('new message is acknoledged!!', m)
     dispatch(addingNewMessage(m));
   });
 

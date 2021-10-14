@@ -16,6 +16,7 @@ export const messagesSlice = createSlice({
       return state;
     },
     addingNewMessage: (state, action) => {
+      console.log('adding new message!!', action.payload)
       const newMessage = action.payload;
       if(!state.find((m) => m.id === newMessage.id)) {
         state.push(newMessage);
@@ -25,6 +26,6 @@ export const messagesSlice = createSlice({
   },
 });
 
-export const { addingMessages, addingNewMessage /*removingChannel*/ } = messagesSlice.actions;
+export const { addingMessages, addingNewMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;
