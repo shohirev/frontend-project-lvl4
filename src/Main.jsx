@@ -25,12 +25,11 @@ const Main = () => {
       });
 
       dispatch(loadingChannels(response.data.channels));
-      console.log('channels in response!!', response.data.channels)
       dispatch(addingMessages(response.data.messages));
-      const generalChannel = response.data.channels.find((c) => c.name === 'general');
+      const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
       dispatch(changingActiveChannelId(generalChannel.id));
     } catch (err) {
-      console.log('error!!', err)
+      console.log(err)
     }
   }, []);
 
@@ -51,7 +50,6 @@ const Main = () => {
   });
 
   socket.on('newMessage', (m) => {
-    console.log('new message is acknoledged!!')
     dispatch(addingNewMessage(m));
   });
 
