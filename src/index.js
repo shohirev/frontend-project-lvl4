@@ -22,7 +22,6 @@ const rollbarConfig = {
 };
 
 const init = (socketClient) => {
-  console.log(socketClient)
   const appContainer = document.querySelector('#chat');
 
   if (appContainer) {

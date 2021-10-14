@@ -5,7 +5,6 @@ import { loadingChannels, addingNewChannel, renamingChannel, removingChannel } f
 import { addingMessages, addingNewMessage } from './features/messagesSlice.js';
 import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 import axios from 'axios';
-//import socket from './socket/index.js';
 import routes from './routes.js';
 import Header from './components/header.jsx';
 import ChatInput from './components/chatInput.jsx';
@@ -51,11 +50,12 @@ const Main = () => {
   });
 
   socket.on('newMessage', (m) => {
+    console.log('new message is acknoledged!!')
     dispatch(addingNewMessage(m));
   });
 
   const messagesList = messages.filter((message) => message.channelId === activeChannelId)
-    .map((message) => <li key={message.id}>{message.text}</li>);
+    .map((message) => { console.log('message', message); return <li key={message.id}>{message.text}</li> });
 
   return (
     <div>
