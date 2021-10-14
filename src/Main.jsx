@@ -25,11 +25,12 @@ const Main = () => {
       });
 
       dispatch(loadingChannels(response.data.channels));
+      console.log('channels in response!!', response.data.channels)
       dispatch(addingMessages(response.data.messages));
       const generalChannel = response.data.channels.find((c) => c.name === 'general');
       dispatch(changingActiveChannelId(generalChannel.id));
     } catch (err) {
-      console.log('error', err)
+      console.log('error!!', err)
     }
   }, []);
 
