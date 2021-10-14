@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { InputGroup, Button, FormControl } from 'react-bootstrap';
 import useSocket from '../hooks/index.jsx';
 
-
 const ChatInput = ({ socket }) => {
   const { t } = useTranslation();
   const [messageText, setMessageText] = useState('');
