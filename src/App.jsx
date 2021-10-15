@@ -57,7 +57,6 @@ const LoggedInRoute = ({ children }) => {
 
 const Chat = ({socket}) => {
   return (
-    <div>
     <Suspense fallback="loading">
       <Provider store={store}>
         <AuthProvider>
@@ -82,7 +81,6 @@ const Chat = ({socket}) => {
         </AuthProvider>
       </Provider>
     </Suspense>
-    </div>
   );
 };
 
