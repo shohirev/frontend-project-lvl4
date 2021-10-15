@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadingChannels, addingNewChannel, renamingChannel, removingChannel } from './features/channelsSlice';
 import { addingMessages, addingNewMessage } from './features/messagesSlice.js';

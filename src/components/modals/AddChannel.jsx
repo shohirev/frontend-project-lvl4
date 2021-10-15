@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,11 @@ const AddChannel = ({ onHide }) => {
   const [isInvalidName, setIsInvalidName] = useState(null);
   const channels = useSelector((state) => state.channels);
   const socket = useSocket();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +36,7 @@ const AddChannel = ({ onHide }) => {
         <Form onSubmit={handleSubmit}>
           <Form.Control
             value={channelName}
+            ref={inputRef}
             isInvalid={isInvalidName}
             data-testid="add-channel"
             onChange={(e) => { setChannelName(e.target.value ) }}
