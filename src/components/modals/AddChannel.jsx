@@ -23,7 +23,7 @@ const AddChannel = ({ onHide }) => {
   };
 
   return (
-    <Modal show={true} centered={true} onHide={onHide}>
+    <Modal show={true} centered={true} backdrop="static" onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.add.title')}</Modal.Title>
       </Modal.Header>
