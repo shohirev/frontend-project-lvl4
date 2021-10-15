@@ -7,20 +7,16 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
   	addingMessages: (state, action) => {
+      console.log('loading messages', action.payload)
       const loadedMessages = action.payload;
       loadedMessages.forEach((message) => {
-        if(!state.find((m) => m.id === message.id)) {
-          state.push(message);
-        }
+        state.push(message);
       });
       return state;
     },
     addingNewMessage: (state, action) => {
-      console.log('adding new message', action.payload)
       const newMessage = action.payload;
-      if(!state.find((m) => m.id === newMessage.id)) {
-        state.push(newMessage);
-      }
+      state.push(newMessage);
       return state;
     }
   },
