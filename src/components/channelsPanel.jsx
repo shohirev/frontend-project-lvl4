@@ -62,6 +62,7 @@ const ChannelPanel = () => {
   });
 
   return (
+    <Container>
       <Col>
         {t('channelsPanel.title')}
         {/* <PlusSquare onClick={() => setModalInfo({type: 'addingChannel'})}  className="ms-auto" color="royalblue"/> */}
@@ -75,8 +76,9 @@ const ChannelPanel = () => {
       <ButtonGroup vertical>
         {panel}
       </ButtonGroup>
-      {renderModal(modalInfo, onHide)}
       </Col>
+      {renderModal(modalInfo, onHide)}
+    </Container>
   );
 };
 
