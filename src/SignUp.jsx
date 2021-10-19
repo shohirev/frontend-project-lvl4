@@ -63,7 +63,7 @@ const SignUpForm = () => {
         return (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
-            <Form.Label srOnly={true}>{t('signUpPage.placeholders.username')}</Form.Label>
+            <Form.Label htmlFor="username" srOnly={true}>{t('signUpPage.placeholders.username')}</Form.Label>
             <Form.Control
               type="text"
               id="username"
@@ -80,7 +80,7 @@ const SignUpForm = () => {
             </Form.Control.Feedback>
           </Row>
           <Row className="mb-3">
-            <Form.Label srOnly={true}>{t('signUpPage.placeholders.password')}</Form.Label>
+            <Form.Label htmlFor="password" srOnly={true}>{t('signUpPage.placeholders.password')}</Form.Label>
             <Form.Control
               type="text"
               id="password"

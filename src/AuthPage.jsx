@@ -49,7 +49,7 @@ const AuthorizationForm = () => {
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <Form.Label srOnly={true}>{t('authPage.placeholders.username')}</Form.Label>
+        <Form.Label htmlFor="username" srOnly={true}>{t('authPage.placeholders.username')}</Form.Label>
         <Form.Control
           id="username"
           name="username"
@@ -61,7 +61,7 @@ const AuthorizationForm = () => {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label srOnly={true}>{t('authPage.placeholders.password')}</Form.Label>
+        <Form.Label htmlFor="password" srOnly={true}>{t('authPage.placeholders.password')}</Form.Label>
         <Form.Control
           id="password"
           name="password"
