@@ -97,8 +97,8 @@ const SignUpForm = () => {
             </Form.Control.Feedback>
           </Row>
           <Row className="mb-3">
-            <Form.Label srOnly={true}>{t('signUpPage.placeholders.confirmPassword')}</Form.Label>
-            <Form.Control 
+            <Form.Label htmlFor="confirmPassword" srOnly={true}>{t('signUpPage.placeholders.confirmPassword')}</Form.Label>
+            <Form.Control
               type="text"
               id="confirmPassword"
               name="confirmPassword"
