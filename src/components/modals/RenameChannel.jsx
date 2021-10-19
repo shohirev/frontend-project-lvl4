@@ -20,7 +20,7 @@ const RenameChannel = ({ id, onHide }) => {
       return;
     }
     onHide();
-    socket.emit('renameChannel', {id, name: newName});
+    socket.emit('renameChannel', {id, name: newName}, () => {});
   };
 
   return (
