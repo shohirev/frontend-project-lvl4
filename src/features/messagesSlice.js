@@ -6,8 +6,7 @@ export const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-  	addingMessages: (state, action) => {
-      console.log('loading messages', action.payload)
+    addingMessages: (state, action) => {
       const loadedMessages = action.payload;
       loadedMessages.forEach((message) => {
         state.push(message);
@@ -18,7 +17,7 @@ export const messagesSlice = createSlice({
       const newMessage = action.payload;
       state.push(newMessage);
       return state;
-    }
+    },
   },
 });
 

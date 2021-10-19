@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col, Modal } from 'react-bootstrap';
+import {
+  Container, Row, Col,
+} from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadingChannels, addingNewChannel, renamingChannel, removingChannel } from './features/channelsSlice';
+import axios from 'axios';
+import {
+  loadingChannels,
+  addingNewChannel,
+  renamingChannel,
+  removingChannel,
+} from './features/channelsSlice';
 import { addingMessages, addingNewMessage } from './features/messagesSlice.js';
 import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
-import axios from 'axios';
 import routes from './routes.js';
 import Header from './components/header.jsx';
 import ChatInput from './components/chatInput.jsx';
@@ -12,7 +19,6 @@ import ChannelsPanel from './components/channelsPanel.jsx';
 import { useSocket } from './hooks/index.jsx';
 
 const Main = () => {
-  const channels = useSelector((state) => state.channels);
   const messages = useSelector((state) => state.messages);
   const activeChannelId = useSelector((state) => state.activeChannelId);
   const dispatch = useDispatch();
@@ -21,14 +27,14 @@ const Main = () => {
   useEffect(async () => {
     try {
       const response = await axios.get(routes.data(), {
-        headers: {Authorization: `Bearer ${localStorage.getItem('token')}`},
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       dispatch(loadingChannels(response.data.channels));
       dispatch(addingMessages(response.data.messages));
       const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
       dispatch(changingActiveChannelId(generalChannel.id));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
 
     socket.on('newChannel', (newChannel) => {
@@ -40,7 +46,7 @@ const Main = () => {
       dispatch(renamingChannel(channel));
     });
 
-    socket.on('removeChannel', ({id}) => {
+    socket.on('removeChannel', ({ id }) => {
       dispatch(removingChannel(id));
       dispatch(changingActiveChannelId(1));
     });
@@ -50,7 +56,8 @@ const Main = () => {
     });
   }, []);
 
-  const messagesList = messages.filter((message) => message.channelId === activeChannelId)
+  const messagesList = messages
+    .filter((message) => message.channelId === activeChannelId)
     .map((message) => <li key={message.id}>{message.text}</li>);
 
   return (

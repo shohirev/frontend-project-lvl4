@@ -3,7 +3,7 @@ import channelsReducer from '../features/channelsSlice.js';
 import messagesReducer from '../features/messagesSlice.js';
 import activeChannelIdReducer from '../features/activeChannelIdSlice.js';
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
     channels: channelsReducer,
     messages: messagesReducer,

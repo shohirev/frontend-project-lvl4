@@ -6,14 +6,14 @@ import { useSocket } from '../../hooks/index.jsx';
 const RemoveChannel = ({ id, onHide }) => {
   const { t } = useTranslation();
   const socket = useSocket();
-  
+
   const remove = () => {
     onHide();
-    socket.emit('removeChannel', {id}, () => {});
+    socket.emit('removeChannel', { id }, () => {});
   };
 
   return (
-    <Modal show={true} centered={true} onHide={onHide}>
+    <Modal show centered onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.remove.title')}</Modal.Title>
       </Modal.Header>

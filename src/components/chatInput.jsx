@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { InputGroup, Button, FormControl } from 'react-bootstrap';
-import useSocket from '../hooks/index.jsx';
+import { useSocket } from '../hooks/index.jsx';
 
-const ChatInput = ({ socket }) => {
+const ChatInput = () => {
   const { t } = useTranslation();
   const [messageText, setMessageText] = useState('');
   const currentChannel = useSelector((state) => state.activeChannelId);
+  const socket = useSocket();
 
   const sendMessage = () => {
-    socket.emit('newMessage', {text: messageText, channelId: currentChannel}, () => {});
+    socket.emit(
+      'newMessage',
+      { text: messageText, channelId: currentChannel },
+      () => {},
+    );
     setMessageText('');
   };
 
@@ -30,7 +34,7 @@ const ChatInput = ({ socket }) => {
         variant="outline-secondary"
         onClick={sendMessage}
       >
-      Отправить
+        Отправить
       </Button>
     </InputGroup>
   );

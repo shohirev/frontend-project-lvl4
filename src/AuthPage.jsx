@@ -1,9 +1,7 @@
-import React from 'react';
-import { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import routes from './routes.js';
@@ -13,7 +11,7 @@ import Header from './components/header.jsx';
 const AuthorizationForm = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  const [ authFailed, setAuthFailed ] = useState(false);
+  const [authFailed, setAuthFailed] = useState(false);
   const history = useHistory();
 
   const formik = useFormik({
@@ -21,7 +19,7 @@ const AuthorizationForm = () => {
       username: '',
       password: '',
     },
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       setAuthFailed(false);
 
       try {
@@ -41,15 +39,17 @@ const AuthorizationForm = () => {
   });
 
   const feedback = authFailed ? (
-      <Form.Control.Feedback type="invalid" tooltip>
-        {t('errors.authorization')}
-      </Form.Control.Feedback>
-    ) : null;
+    <Form.Control.Feedback type="invalid" tooltip>
+      {t('errors.authorization')}
+    </Form.Control.Feedback>
+  ) : null;
 
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Group>
-        <Form.Label htmlFor="username" srOnly={true}>{t('authPage.placeholders.username')}</Form.Label>
+        <Form.Label htmlFor="username" srOnly>
+          {t('authPage.placeholders.username')}
+        </Form.Label>
         <Form.Control
           id="username"
           name="username"
@@ -61,7 +61,9 @@ const AuthorizationForm = () => {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label htmlFor="password" srOnly={true}>{t('authPage.placeholders.password')}</Form.Label>
+        <Form.Label htmlFor="password" srOnly>
+          {t('authPage.placeholders.password')}
+        </Form.Label>
         <Form.Control
           id="password"
           name="password"
@@ -73,7 +75,7 @@ const AuthorizationForm = () => {
         />
         {feedback}
       </Form.Group>
-      <Button type="submit">{t("authPage.logInBtn")}</Button>
+      <Button type="submit">{t('authPage.logInBtn')}</Button>
     </Form>
   );
 };
@@ -89,14 +91,12 @@ const AuthPageFooter = () => {
   );
 };
 
-const AuthPage = () => {
-  return (
-    <div>
-      <Header />
-      <AuthorizationForm />
-      <AuthPageFooter />
-    </div>
-  );
-};
+const AuthPage = () => (
+  <div>
+    <Header />
+    <AuthorizationForm />
+    <AuthPageFooter />
+  </div>
+);
 
 export default AuthPage;

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { removingChannel } from './channelsSlice.js';
+// import { removingChannel } from "./channelsSlice.js";
 
 const initialState = null;
 
@@ -7,10 +7,7 @@ export const activeChannelIdSlice = createSlice({
   name: 'activeChannelId',
   initialState,
   reducers: {
-    changingActiveChannelId: (state, action) => {
-      state = action.payload;
-      return state;
-    },
+    changingActiveChannelId: (state, action) => action.payload,
   },
 });
 

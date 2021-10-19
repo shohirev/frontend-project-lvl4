@@ -24,11 +24,11 @@ const AddChannel = ({ onHide }) => {
       return;
     }
     onHide();
-    socket.emit('newChannel', {name: channelName}, () => {});
+    socket.emit('newChannel', { name: channelName }, () => {});
   };
 
   return (
-    <Modal show={true} centered={true} backdrop="static" onHide={onHide}>
+    <Modal show centered backdrop="static" onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.add.title')}</Modal.Title>
       </Modal.Header>
@@ -39,7 +39,9 @@ const AddChannel = ({ onHide }) => {
             ref={inputRef}
             isInvalid={isInvalidName}
             data-testid="add-channel"
-            onChange={(e) => { setChannelName(e.target.value ) }}
+            onChange={(e) => {
+              setChannelName(e.target.value);
+            }}
           />
           <Button variant="secondary" type="submit" onClick={onHide}>
             {t('modals.add.cancelBtn')}

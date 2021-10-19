@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Row, Form, Button } from 'react-bootstrap';
+import {
+  Container, Row, Form, Button,
+} from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -15,19 +17,31 @@ const SignUpForm = () => {
   const history = useHistory();
 
   const schema = yup.object().shape({
-    username: yup.string().min(3, t('signUpPage.validationErrors.username'))
-                          .max(20, t('signUpPage.validationErrors.username'))
-                          .required(t('signUpPage.validationErrors.requiredField')),
-    password: yup.string().min(6, t('signUpPage.validationErrors.password'))
-                          .required(t('signUpPage.validationErrors.requiredField')),
-    confirmPassword: yup.string().oneOf([yup.ref('password')], t('signUpPage.validationErrors.confirmPassword'))
-                                 .required(t('signUpPage.validationErrors.requiredField')),
-    });
+    username: yup
+      .string()
+      .min(3, t('signUpPage.validationErrors.username'))
+      .max(20, t('signUpPage.validationErrors.username'))
+      .required(t('signUpPage.validationErrors.requiredField')),
+    password: yup
+      .string()
+      .min(6, t('signUpPage.validationErrors.password'))
+      .required(t('signUpPage.validationErrors.requiredField')),
+    confirmPassword: yup
+      .string()
+      .oneOf(
+        [yup.ref('password')],
+        t('signUpPage.validationErrors.confirmPassword'),
+      )
+      .required(t('signUpPage.validationErrors.requiredField')),
+  });
 
   const handler = async (values, actions) => {
-    const {username, password} = values;
+    const { username, password } = values;
     try {
-      const response = await axios.post(routes.signup(), { username, password });
+      const response = await axios.post(routes.signup(), {
+        username,
+        password,
+      });
       const { token } = response.data;
       localStorage.setItem('token', token);
       auth.logIn();
@@ -36,7 +50,7 @@ const SignUpForm = () => {
       actions.setSubmitting(false);
       const { status } = err.response;
       if (status === 409) {
-        actions.setErrors({username: t('userDuplication')});
+        actions.setErrors({ username: t('userDuplication') });
       }
     }
   };
@@ -58,12 +72,12 @@ const SignUpForm = () => {
         touched,
         values,
         errors,
-        isValid,
-      }) => {
-        return (
+      }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <Row className="mb-3">
-            <Form.Label htmlFor="username" srOnly={true}>{t('signUpPage.placeholders.username')}</Form.Label>
+            <Form.Label htmlFor="username" srOnly>
+              {t('signUpPage.placeholders.username')}
+            </Form.Label>
             <Form.Control
               type="text"
               id="username"
@@ -80,7 +94,9 @@ const SignUpForm = () => {
             </Form.Control.Feedback>
           </Row>
           <Row className="mb-3">
-            <Form.Label htmlFor="password" srOnly={true}>{t('signUpPage.placeholders.password')}</Form.Label>
+            <Form.Label htmlFor="password" srOnly>
+              {t('signUpPage.placeholders.password')}
+            </Form.Label>
             <Form.Control
               type="text"
               id="password"
@@ -97,7 +113,9 @@ const SignUpForm = () => {
             </Form.Control.Feedback>
           </Row>
           <Row className="mb-3">
-            <Form.Label htmlFor="confirmPassword" srOnly={true}>{t('signUpPage.placeholders.confirmPassword')}</Form.Label>
+            <Form.Label htmlFor="confirmPassword" srOnly>
+              {t('signUpPage.placeholders.confirmPassword')}
+            </Form.Label>
             <Form.Control
               type="text"
               id="confirmPassword"
@@ -113,10 +131,11 @@ const SignUpForm = () => {
               {errors.confirmPassword}
             </Form.Control.Feedback>
           </Row>
-          <Button type="submit" variant="outline-primary">{t('signUpPage.signUpBtn')}</Button>
+          <Button type="submit" variant="outline-primary">
+            {t('signUpPage.signUpBtn')}
+          </Button>
         </Form>
-        );
-      }}
+      )}
     </Formik>
   );
 };
@@ -127,9 +146,7 @@ const SignUpPage = () => {
   return (
     <Container>
       <Header />
-      <Row>
-        {t('signUpPage.title')}
-      </Row>
+      <Row>{t('signUpPage.title')}</Row>
       <Row>
         <SignUpForm />
       </Row>

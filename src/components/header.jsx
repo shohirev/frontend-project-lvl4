@@ -16,10 +16,7 @@ export default () => {
     };
 
     return (
-      <Button
-        variant="primary"
-        onClick={handler}
-      >
+      <Button variant="primary" onClick={handler}>
         {t('header.logOutBtn')}
       </Button>
     );
@@ -29,7 +26,7 @@ export default () => {
     <Navbar bg="light">
       <Container>
         <Navbar.Brand as="header">
-          <Link to='/'>{t('header.title')}</Link>
+          <Link to="/">{t('header.title')}</Link>
           <LogOutBtn />
         </Navbar.Brand>
       </Container>

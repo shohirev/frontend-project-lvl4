@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +11,7 @@ const RenameChannel = ({ id, onHide }) => {
   const currentChannel = channels.find((c) => c.id === id);
   const [newName, setNewName] = useState(currentChannel.name);
   const [isInvalidName, setIsInvalidName] = useState(null);
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -20,11 +20,11 @@ const RenameChannel = ({ id, onHide }) => {
       return;
     }
     onHide();
-    socket.emit('renameChannel', {id, name: newName}, () => {});
+    socket.emit('renameChannel', { id, name: newName }, () => {});
   };
 
   return (
-    <Modal show={true} centered={true} onHide={onHide}>
+    <Modal show centered onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.rename.title')}</Modal.Title>
       </Modal.Header>
@@ -40,7 +40,7 @@ const RenameChannel = ({ id, onHide }) => {
             {t('modals.rename.cancelBtn')}
           </Button>
           <Button variant="primary" type="submit">
-            {(t('modals.rename.sendBtn'))}
+            {t('modals.rename.sendBtn')}
           </Button>
         </Form>
       </Modal.Body>
