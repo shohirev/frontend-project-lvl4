@@ -21,25 +21,24 @@ import { useSocket } from './hooks/index.jsx';
 const Main = () => {
   const messages = useSelector((state) => state.messages);
   const activeChannelId = useSelector((state) => state.activeChannelId);
-  const dispatch = useDispatch();
-  const socket = useSocket();
-
-  const fetchInitialData = async () => {
-    try {
-      const response = await axios.get(routes.data(), {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
-
-      dispatch(addingChannels(response.data.channels));
-      dispatch(addingMessages(response.data.messages));
-      const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
-      dispatch(changingActiveChannelId(generalChannel.id));
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   useEffect(() => {
+    const dispatch = useDispatch();
+    const socket = useSocket();
+    const fetchInitialData = async () => {
+      try {
+        const response = await axios.get(routes.data(), {
+          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+        });
+
+        dispatch(addingChannels(response.data.channels));
+        dispatch(addingMessages(response.data.messages));
+        const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
+        dispatch(changingActiveChannelId(generalChannel.id));
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchInitialData();
 
     socket.on('newChannel', (newChannel) => {
@@ -75,7 +74,7 @@ const Main = () => {
           </Col>
           <Col>
             {messagesList}
-            <ChatInput socket={socket} />
+            <ChatInput />
           </Col>
         </Row>
       </Container>

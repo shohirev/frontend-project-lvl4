@@ -4,7 +4,7 @@ import { useHistory, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 
-export default () => {
+const Header = () => {
   const { t } = useTranslation();
   const auth = useAuth();
   const history = useHistory();
@@ -33,3 +33,5 @@ export default () => {
     </Navbar>
   );
 };
+
+export default Header;
