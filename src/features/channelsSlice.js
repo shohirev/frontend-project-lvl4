@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { changingActiveChannelId } from "./activeChannelIdSlice.js";
 
 const initialState = [];
 
@@ -7,7 +6,7 @@ export const channelsSlice = createSlice({
   name: 'channels',
   initialState,
   reducers: {
-    loadingChannels: (state, action) => {
+    addingChannels: (state, action) => {
       const loadedChannels = action.payload;
       loadedChannels.forEach((channel) => {
         if (!state.find((c) => c.id === channel.id)) {
@@ -34,7 +33,7 @@ export const channelsSlice = createSlice({
 });
 
 export const {
-  loadingChannels,
+  addingChannels,
   addingNewChannel,
   renamingChannel,
   removingChannel,

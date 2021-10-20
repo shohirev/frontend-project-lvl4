@@ -13,17 +13,20 @@ import AuthPage from './AuthPage.jsx';
 import SignUp from './SignUp.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import { authContext, socketContext } from './contexts/index.jsx';
-import { useAuth } from './hooks/index.jsx';
+import { useAuth, useSocket } from './hooks/index.jsx';
 
 const AuthProvider = ({ children }) => {
   const isAuthorized = localStorage.getItem('token');
   const [loggedIn, setLoggedIn] = useState(isAuthorized);
+  const socket = useSocket();
+
   const logIn = (token) => {
     localStorage.setItem('token', token);
     setLoggedIn(true);
   };
   const logOut = () => {
     localStorage.removeItem('token');
+    socket.removeAllListeners();
     setLoggedIn(false);
   };
 
@@ -45,8 +48,8 @@ const LoggedInRoute = ({ children }) => {
 const Chat = ({ socket }) => (
   <Suspense fallback="loading">
     <Provider store={store}>
-      <AuthProvider>
-        <socketContext.Provider value={socket}>
+      <socketContext.Provider value={socket}>
+        <AuthProvider>
           <Router>
             <Switch>
               <LoggedInRoute exact path="/">
@@ -63,8 +66,8 @@ const Chat = ({ socket }) => (
               </Route>
             </Switch>
           </Router>
-        </socketContext.Provider>
-      </AuthProvider>
+        </AuthProvider>
+      </socketContext.Provider>
     </Provider>
   </Suspense>
 );

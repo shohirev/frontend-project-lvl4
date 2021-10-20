@@ -5,7 +5,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
-  loadingChannels,
+  addingChannels,
   addingNewChannel,
   renamingChannel,
   removingChannel,
@@ -24,18 +24,23 @@ const Main = () => {
   const dispatch = useDispatch();
   const socket = useSocket();
 
-  useEffect(async () => {
+  const fetchInitialData = async () => {
     try {
       const response = await axios.get(routes.data(), {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
-      dispatch(loadingChannels(response.data.channels));
+
+      dispatch(addingChannels(response.data.channels));
       dispatch(addingMessages(response.data.messages));
       const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
       dispatch(changingActiveChannelId(generalChannel.id));
     } catch (err) {
       console.log(err);
     }
+  };
+
+  useEffect(() => {
+    fetchInitialData();
 
     socket.on('newChannel', (newChannel) => {
       dispatch(addingNewChannel(newChannel));
