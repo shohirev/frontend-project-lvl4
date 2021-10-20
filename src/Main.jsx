@@ -24,7 +24,7 @@ const Main = () => {
   const dispatch = useDispatch();
   const socket = useSocket();
 
-  useEffect(() => {  
+  useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const response = await axios.get(routes.data(), {
