@@ -21,10 +21,10 @@ import { useSocket } from './hooks/index.jsx';
 const Main = () => {
   const messages = useSelector((state) => state.messages);
   const activeChannelId = useSelector((state) => state.activeChannelId);
+  const dispatch = useDispatch();
+  const socket = useSocket();
 
-  useEffect(() => {
-    const dispatch = useDispatch();
-    const socket = useSocket();
+  useEffect(() => {  
     const fetchInitialData = async () => {
       try {
         const response = await axios.get(routes.data(), {
