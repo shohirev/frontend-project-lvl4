@@ -13,7 +13,7 @@ const ChatInput = () => {
   const sendMessage = () => {
     socket.emit(
       'newMessage',
-      { text: messageText, channelId: currentChannel },
+      { username: localStorage.getItem('username'), text: messageText, channelId: currentChannel },
       () => {},
     );
     setMessageText('');

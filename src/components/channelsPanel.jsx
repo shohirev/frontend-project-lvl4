@@ -40,26 +40,30 @@ const ChannelPanel = () => {
       dispatch(changingActiveChannelId(channel.id));
     };
 
+    const dropdownBtns = channel.removable ? (
+      <DropdownButton as={ButtonGroup} variant={type} title="">
+        <Dropdown.Item
+          eventKey="1"
+          onClick={() => setModalInfo({ id: channel.id, type: 'renamingChannel' })}
+        >
+          {t('channelsPanel.renameBtn')}
+        </Dropdown.Item>
+        <Dropdown.Item
+          eventKey="2"
+          onClick={() => setModalInfo({ id: channel.id, type: 'removingChannel' })}
+        >
+          {t('channelsPanel.removeBtn')}
+        </Dropdown.Item>
+      </DropdownButton>
+    ) : null;
+
     return (
       <ButtonGroup key={channel.id}>
         <Button variant={type} onClick={handler}>
           #
           {channel.name}
         </Button>
-        <DropdownButton as={ButtonGroup} variant={type} title="">
-          <Dropdown.Item
-            eventKey="1"
-            onClick={() => setModalInfo({ id: channel.id, type: 'renamingChannel' })}
-          >
-            {t('channelsPanel.renameBtn')}
-          </Dropdown.Item>
-          <Dropdown.Item
-            eventKey="2"
-            onClick={() => setModalInfo({ id: channel.id, type: 'removingChannel' })}
-          >
-            {t('channelsPanel.removeBtn')}
-          </Dropdown.Item>
-        </DropdownButton>
+        {dropdownBtns}
       </ButtonGroup>
     );
   });

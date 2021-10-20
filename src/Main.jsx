@@ -62,7 +62,7 @@ const Main = () => {
 
   const messagesList = messages
     .filter((message) => message.channelId === activeChannelId)
-    .map((message) => <li key={message.id}>{message.text}</li>);
+    .map((message) => <li key={message.id}>{`${message.username}: ${message.text}`}</li>);
 
   return (
     <div>
@@ -73,7 +73,9 @@ const Main = () => {
             <ChannelsPanel />
           </Col>
           <Col>
-            {messagesList}
+            <ul>
+              {messagesList}
+            </ul>
             <ChatInput />
           </Col>
         </Row>

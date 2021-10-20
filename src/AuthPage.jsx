@@ -30,7 +30,7 @@ const AuthorizationForm = () => {
           password,
         });
         const { token } = response.data;
-        auth.logIn(token);
+        auth.logIn(token, username);
         history.push('/');
       } catch (error) {
         setAuthFailed(true);

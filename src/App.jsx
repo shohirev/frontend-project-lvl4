@@ -20,8 +20,9 @@ const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(isAuthorized);
   const socket = useSocket();
 
-  const logIn = (token) => {
+  const logIn = (token, username) => {
     localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
     setLoggedIn(true);
   };
   const logOut = () => {
