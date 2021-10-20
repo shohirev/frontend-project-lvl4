@@ -62,7 +62,12 @@ const Main = () => {
 
   const messagesList = messages
     .filter((message) => message.channelId === activeChannelId)
-    .map((message) => <li key={message.id}>{`${message.username}: ${message.text}`}</li>);
+    .map((message) => (
+      <div key={message.id}>
+        <span><b>{message.username}: </b></span>
+        <span>{message.text}</span>
+      </div>
+    ));
 
   return (
     <div>
