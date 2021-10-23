@@ -1,7 +1,7 @@
 // @ts-check
 
-import _ from 'lodash';
-import HttpErrors from 'http-errors';
+import _ from "lodash";
+import HttpErrors from "http-errors";
 
 const { Unauthorized, Conflict } = HttpErrors;
 
@@ -12,12 +12,12 @@ const buildState = (defaultState) => {
   const randomChannelId = getNextId();
   const state = {
     channels: [
-      { id: generalChannelId, name: 'general', removable: false },
-      { id: randomChannelId, name: 'random', removable: false },
+      { id: generalChannelId, name: "general", removable: false },
+      { id: randomChannelId, name: "random", removable: false },
     ],
     messages: [],
     currentChannelId: generalChannelId,
-    users: [{ id: 1, username: 'admin', password: 'admin' }],
+    users: [{ id: 1, username: "admin", password: "admin" }],
   };
 
   if (defaultState.messages) {
@@ -39,20 +39,20 @@ const buildState = (defaultState) => {
 export default (app, defaultState = {}) => {
   const state = buildState(defaultState);
 
-  app.io.on('connect', (socket) => {
-    console.log({ 'socket.id': socket.id });
+  app.io.on("connect", (socket) => {
+    console.log({ "socket.id": socket.id });
 
-    socket.on('newMessage', (message, acknowledge = _.noop) => {
+    socket.on("newMessage", (message, acknowledge = _.noop) => {
       const messageWithId = {
         ...message,
         id: getNextId(),
       };
       state.messages.push(messageWithId);
-      acknowledge({ status: 'ok' });
-      app.io.emit('newMessage', messageWithId);
+      acknowledge({ status: "ok" });
+      app.io.emit("newMessage", messageWithId);
     });
 
-    socket.on('newChannel', (channel, acknowledge = _.noop) => {
+    socket.on("newChannel", (channel, acknowledge = _.noop) => {
       const channelWithId = {
         ...channel,
         removable: true,
@@ -60,34 +60,34 @@ export default (app, defaultState = {}) => {
       };
 
       state.channels.push(channelWithId);
-      acknowledge({ status: 'ok', data: channelWithId });
-      app.io.emit('newChannel', channelWithId);
+      acknowledge({ status: "ok", data: channelWithId });
+      app.io.emit("newChannel", channelWithId);
     });
 
-    socket.on('removeChannel', ({ id }, acknowledge = _.noop) => {
+    socket.on("removeChannel", ({ id }, acknowledge = _.noop) => {
       const channelId = Number(id);
       state.channels = state.channels.filter((c) => c.id !== channelId);
       state.messages = state.messages.filter((m) => m.channelId !== channelId);
       const data = { id: channelId };
 
-      acknowledge({ status: 'ok' });
-      app.io.emit('removeChannel', data);
+      acknowledge({ status: "ok" });
+      app.io.emit("removeChannel", data);
     });
 
-    socket.on('renameChannel', ({ id, name }, acknowledge = _.noop) => {
+    socket.on("renameChannel", ({ id, name }, acknowledge = _.noop) => {
       const channelId = Number(id);
       const channel = state.channels.find((c) => c.id === channelId);
       if (!channel) return;
       channel.name = name;
 
-      acknowledge({ status: 'ok' });
-      app.io.emit('renameChannel', channel);
+      acknowledge({ status: "ok" });
+      app.io.emit("renameChannel", channel);
     });
   });
 
-  app.post('/api/v1/login', async (req, reply) => {
-    const username = _.get(req, 'body.username');
-    const password = _.get(req, 'body.password');
+  app.post("/api/v1/login", async (req, reply) => {
+    const username = _.get(req, "body.username");
+    const password = _.get(req, "body.password");
     const user = state.users.find((u) => u.username === username);
 
     if (!user || user.password !== password) {
@@ -99,9 +99,9 @@ export default (app, defaultState = {}) => {
     reply.send({ token, username });
   });
 
-  app.post('/api/v1/signup', async (req, reply) => {
-    const username = _.get(req, 'body.username');
-    const password = _.get(req, 'body.password');
+  app.post("/api/v1/signup", async (req, reply) => {
+    const username = _.get(req, "body.username");
+    const password = _.get(req, "body.password");
     const user = state.users.find((u) => u.username === username);
 
     if (user) {
@@ -114,12 +114,12 @@ export default (app, defaultState = {}) => {
     state.users.push(newUser);
     reply
       .code(201)
-      .header('Content-Type', 'application/json; charset=utf-8')
+      .header("Content-Type", "application/json; charset=utf-8")
       .send({ token, username });
   });
 
   app.get(
-    '/api/v1/data',
+    "/api/v1/data",
     { preValidation: [app.authenticate] },
     (req, reply) => {
       const user = state.users.find(({ id }) => id === req.user.userId);
@@ -130,12 +130,12 @@ export default (app, defaultState = {}) => {
       }
 
       reply
-        .header('Content-Type', 'application/json; charset=utf-8')
-        .send(_.omit(state, 'users'));
-    },
+        .header("Content-Type", "application/json; charset=utf-8")
+        .send(_.omit(state, "users"));
+    }
   );
 
-  app.get('*', (_req, reply) => {
-    reply.view('index.pug');
+  app.get("*", (_req, reply) => {
+    reply.view("index.pug");
   });
 };

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { removingChannel } from "./channelsSlice.js";
 
 const initialState = null;
 

@@ -23,12 +23,12 @@ const Header = () => {
   };
 
   return (
-    <Navbar bg="light">
+    <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
       <Container>
         <Navbar.Brand as="header">
           <Link to="/">{t('header.title')}</Link>
-          <LogOutBtn />
         </Navbar.Brand>
+        <LogOutBtn />
       </Container>
     </Navbar>
   );

@@ -42,7 +42,9 @@ const LoggedInRoute = ({ children }) => {
   const auth = useAuth();
 
   return (
-    <Route render={() => (auth.loggedIn ? children : <Redirect to="/login" />)} />
+    <Route
+      render={() => (auth.loggedIn ? children : <Redirect to="/login" />)}
+    />
   );
 };
 

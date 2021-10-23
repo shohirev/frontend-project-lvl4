@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Container, Row, Col,
-} from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
+import { Container, Row, Col } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import {
   addingChannels,
@@ -13,14 +11,12 @@ import {
 import { addingMessages, addingNewMessage } from './features/messagesSlice.js';
 import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 import routes from './routes.js';
-import Header from './components/header.jsx';
-import ChatInput from './components/chatInput.jsx';
-import ChannelsPanel from './components/channelsPanel.jsx';
+import Header from './components/Header.jsx';
+import Chat from './components/chat/Chat.jsx';
+import ChannelsPanel from './components/ChannelsPanel.jsx';
 import { useSocket } from './hooks/index.jsx';
 
 const Main = () => {
-  const messages = useSelector((state) => state.messages);
-  const activeChannelId = useSelector((state) => state.activeChannelId);
   const dispatch = useDispatch();
   const socket = useSocket();
 
@@ -33,7 +29,9 @@ const Main = () => {
 
         dispatch(addingChannels(response.data.channels));
         dispatch(addingMessages(response.data.messages));
-        const generalChannel = response.data.channels.find((c) => c.name.toLowerCase() === 'general');
+        const generalChannel = response.data.channels.find(
+          (c) => c.name.toLowerCase() === 'general',
+        );
         dispatch(changingActiveChannelId(generalChannel.id));
       } catch (err) {
         console.log(err);
@@ -60,28 +58,16 @@ const Main = () => {
     });
   }, []);
 
-  const messagesList = messages
-    .filter((message) => message.channelId === activeChannelId)
-    .map((message) => (
-      <div key={message.id}>
-        <span><b>{message.username}: </b></span>
-        <span>{message.text}</span>
-      </div>
-    ));
-
   return (
-    <div>
+    <div className="d-flex flex-column h-100">
       <Header />
-      <Container>
-        <Row>
-          <Col>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow">
+        <Row className="h-100 bg-white flex-md-row">
+          <Col className="col-4 col-md-2 border-end pt-5 px-0 bg-light">
             <ChannelsPanel />
           </Col>
-          <Col>
-            <ul>
-              {messagesList}
-            </ul>
-            <ChatInput />
+          <Col className="d-flex flex-column p-0 w-100 h-100">
+            <Chat />
           </Col>
         </Row>
       </Container>

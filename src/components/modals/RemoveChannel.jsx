@@ -17,14 +17,21 @@ const RemoveChannel = ({ id, onHide }) => {
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.remove.title')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        {t('modals.remove.insurance')}
-        <Button variant="secondary" type="submit" onClick={onHide}>
-          {t('modals.remove.cancelBtn')}
-        </Button>
-        <Button variant="primary" type="submit" onClick={remove}>
-          {t('modals.remove.removeBtn')}
-        </Button>
+      <Modal.Body className="d-flex flex-column justify-content-around">
+        <p className="lead">{t('modals.remove.insurance')}</p>
+        <div className="d-flex justify-content-end">
+          <Button
+            variant="secondary"
+            className="mr-2"
+            type="submit"
+            onClick={onHide}
+          >
+            {t('modals.remove.cancelBtn')}
+          </Button>
+          <Button variant="danger" type="submit" onClick={remove}>
+            {t('modals.remove.removeBtn')}
+          </Button>
+        </div>
       </Modal.Body>
     </Modal>
   );

@@ -9,9 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-if (
-  process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production'
-) {
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
   init();
 }
 

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
-  Container,
-  Col,
   Button,
   ButtonGroup,
   Dropdown,
@@ -58,31 +56,38 @@ const ChannelPanel = () => {
     ) : null;
 
     return (
-      <ButtonGroup key={channel.id}>
-        <Button variant={type} onClick={handler}>
-          #
-          {channel.name}
-        </Button>
-        {dropdownBtns}
-      </ButtonGroup>
+      <li key={channel.id} className="nav-item w-100">
+        <ButtonGroup className="w-100">
+          <Button
+            variant={type}
+            className="btn w-100 rounded-0 text-left text-truncate"
+            onClick={handler}
+          >
+            #
+            {channel.name}
+          </Button>
+          {dropdownBtns}
+        </ButtonGroup>
+      </li>
     );
   });
 
   return (
-    <Container>
-      <Col>
-        {t('channelsPanel.title')}
+    <div>
+      <div className="d-flex justify-content-around align-items-center mb-2 ps-4 pe-2">
+        <span>{t('channelsPanel.title')}</span>
         <Button
           className="ms-auto"
           color="royalblue"
+          size="sm"
           onClick={() => setModalInfo({ type: 'addingChannel' })}
         >
           +
         </Button>
-        <ButtonGroup vertical>{panel}</ButtonGroup>
-      </Col>
+      </div>
+      <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
       {renderModal(modalInfo, onHide)}
-    </Container>
+    </div>
   );
 };
 

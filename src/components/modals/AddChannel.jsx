@@ -6,11 +6,11 @@ import { useSocket } from '../../hooks/index.jsx';
 
 const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
+  const socket = useSocket();
+  const inputRef = useRef();
   const [channelName, setChannelName] = useState('');
   const [isInvalidName, setIsInvalidName] = useState(null);
   const channels = useSelector((state) => state.channels);
-  const socket = useSocket();
-  const inputRef = useRef();
 
   useEffect(() => {
     inputRef.current.focus();
@@ -32,23 +32,36 @@ const AddChannel = ({ onHide }) => {
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.add.title')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="d-flex flex-column justify-content-around">
         <Form onSubmit={handleSubmit}>
-          <Form.Control
-            value={channelName}
-            ref={inputRef}
-            isInvalid={isInvalidName}
-            data-testid="add-channel"
-            onChange={(e) => {
-              setChannelName(e.target.value);
-            }}
-          />
-          <Button variant="secondary" type="submit" onClick={onHide}>
-            {t('modals.add.cancelBtn')}
-          </Button>
-          <Button variant="primary" type="submit">
-            {t('modals.add.sendBtn')}
-          </Button>
+          <Form.Group>
+            <Form.Control
+              value={channelName}
+              ref={inputRef}
+              isInvalid={isInvalidName}
+              required
+              data-testid="add-channel"
+              onChange={(e) => {
+                setChannelName(e.target.value);
+              }}
+            />
+            <Form.Control.Feedback type="invalid">
+              {t('errors.channelDuplication')}
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="d-flex justify-content-end">
+            <Button
+              variant="secondary"
+              className="mr-2"
+              type="submit"
+              onClick={onHide}
+            >
+              {t('modals.add.cancelBtn')}
+            </Button>
+            <Button variant="primary" type="submit">
+              {t('modals.add.sendBtn')}
+            </Button>
+          </Form.Group>
         </Form>
       </Modal.Body>
     </Modal>

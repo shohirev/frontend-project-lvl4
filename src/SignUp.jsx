@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import routes from './routes.js';
 import { useAuth } from './hooks/index.jsx';
-import Header from './components/header.jsx';
+import Header from './components/Header.jsx';
 
 const SignUpForm = () => {
   const { t } = useTranslation();
