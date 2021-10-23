@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import {
+  Container, Row, Form, Button,
+} from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -85,17 +87,23 @@ const AuthPageFooter = () => {
 
   return (
     <div>
-      {t('authPage.signUpGreeting')}
+      <span className="mr-2">{t('authPage.signUpGreeting')}</span>
       <Link to="/signup">{t('authPage.signUpLink')}</Link>
     </div>
   );
 };
 
 const AuthPage = () => (
-  <div>
+  <div className="d-flex flex-column h-100">
     <Header />
-    <AuthorizationForm />
-    <AuthPageFooter />
+    <Container className="d-flex flex-column justify-content-center align-items-center h-100 my-4 overflow-hidden rounded shadow">
+      <Row>
+        <AuthorizationForm />
+      </Row>
+      <Row>
+        <AuthPageFooter />
+      </Row>
+    </Container>
   </div>
 );
 

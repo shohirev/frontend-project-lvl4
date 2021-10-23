@@ -144,13 +144,19 @@ const SignUpPage = () => {
   const { t } = useTranslation();
 
   return (
-    <Container>
+    <div className="d-flex flex-column h-100">
       <Header />
-      <Row>{t('signUpPage.title')}</Row>
-      <Row>
-        <SignUpForm />
-      </Row>
-    </Container>
+      <Container className="d-flex flex-column justify-content-center align-items-center h-100 my-4 overflow-hidden rounded shadow">
+        <Row>
+          <h1>
+            {t('signUpPage.title')}
+          </h1>
+        </Row>
+        <Row>
+          <SignUpForm />
+        </Row>
+      </Container>
+    </div>
   );
 };
 
