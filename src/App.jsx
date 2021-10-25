@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import './i18n.js';
 import { Provider } from 'react-redux';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import store from './app/store.js';
 import Main from './Main.jsx';
 import AuthPage from './AuthPage.jsx';
@@ -48,31 +49,44 @@ const LoggedInRoute = ({ children }) => {
   );
 };
 
+const rollbarConfig = {
+  accessToken: '66038ab5112a4fb29bd26c74560fba52',
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+  payload: {
+    environment: 'production',
+  },
+};
+
 const Chat = ({ socket }) => (
-  <Suspense fallback="loading">
-    <Provider store={store}>
-      <socketContext.Provider value={socket}>
-        <AuthProvider>
-          <Router>
-            <Switch>
-              <LoggedInRoute exact path="/">
-                <Main />
-              </LoggedInRoute>
-              <Route exact path="/login">
-                <AuthPage />
-              </Route>
-              <Route exact path="/signup">
-                <SignUp />
-              </Route>
-              <Route path="*">
-                <NotFoundPage />
-              </Route>
-            </Switch>
-          </Router>
-        </AuthProvider>
-      </socketContext.Provider>
-    </Provider>
-  </Suspense>
+  <RollbarProvider config={rollbarConfig}>
+    <ErrorBoundary>
+      <Suspense fallback="loading">
+        <Provider store={store}>
+          <socketContext.Provider value={socket}>
+            <AuthProvider>
+              <Router>
+                <Switch>
+                  <LoggedInRoute exact path="/">
+                    <Main />
+                  </LoggedInRoute>
+                  <Route exact path="/login">
+                    <AuthPage />
+                  </Route>
+                  <Route exact path="/signup">
+                    <SignUp />
+                  </Route>
+                  <Route path="*">
+                    <NotFoundPage />
+                  </Route>
+                </Switch>
+              </Router>
+            </AuthProvider>
+          </socketContext.Provider>
+        </Provider>
+      </Suspense>
+    </ErrorBoundary>
+  </RollbarProvider>
 );
 
 export default Chat;
