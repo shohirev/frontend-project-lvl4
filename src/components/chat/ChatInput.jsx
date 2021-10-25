@@ -42,7 +42,7 @@ const ChatInput = () => {
       />
       <InputGroup.Append>
         <Button
-          name={t('chatInput.sendMessageBtn')}
+          aria-label={t('chatInput.sendMessageBtn')}
           variant="outline-secondary"
           disabled={isDisabled}
           onClick={sendMessage}
