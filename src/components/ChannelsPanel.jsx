@@ -77,14 +77,12 @@ const ChannelPanel = () => {
     <div>
       <div className="d-flex justify-content-around align-items-center mb-2 ps-4 pe-2">
         <span>{t('channelsPanel.title')}</span>
-        
-          <PlusSquare
-            role="button"
-            color="royalblue"
-            aria-label="+"
-            onClick={() => setModalInfo({ type: 'addingChannel' })}
-          />
-        
+        <PlusSquare
+          role="button"
+          color="royalblue"
+          aria-label="+"
+          onClick={() => setModalInfo({ type: 'addingChannel' })}
+        />
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
       {renderModal(modalInfo, onHide)}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { InputGroup, Button, FormControl } from 'react-bootstrap';
+import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useSocket } from '../../hooks/index.jsx';
 
 const ChatInput = () => {
@@ -41,13 +42,12 @@ const ChatInput = () => {
       />
       <InputGroup.Append>
         <Button
-          role="button"
           name={t('chatInput.sendMessageBtn')}
           variant="outline-secondary"
           disabled={isDisabled}
           onClick={sendMessage}
         >
-          Отправить
+          <ArrowRightSquare />
         </Button>
       </InputGroup.Append>
     </InputGroup>
