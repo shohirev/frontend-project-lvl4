@@ -7,6 +7,7 @@ import {
   Dropdown,
   DropdownButton,
 } from 'react-bootstrap';
+import { PlusSquare } from 'react-bootstrap-icons';
 import { changingActiveChannelId } from '../features/activeChannelIdSlice.js';
 import getModal from './modals/index.js';
 
@@ -76,14 +77,14 @@ const ChannelPanel = () => {
     <div>
       <div className="d-flex justify-content-around align-items-center mb-2 ps-4 pe-2">
         <span>{t('channelsPanel.title')}</span>
-        <Button
-          className="ms-auto"
+        <PlusSquare
           color="royalblue"
-          size="sm"
           onClick={() => setModalInfo({ type: 'addingChannel' })}
         >
-          +
-        </Button>
+          <span className="visually-hidden">
+            +
+          </span>
+        </PlusSquare>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
       {renderModal(modalInfo, onHide)}
