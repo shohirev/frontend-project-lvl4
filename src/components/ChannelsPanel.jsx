@@ -79,7 +79,7 @@ const ChannelPanel = () => {
         <span>{t('channelsPanel.title')}</span>
         <PlusSquare
           color="royalblue"
-          aria-role="button"
+          role="button"
           name="+"
           onClick={() => setModalInfo({ type: 'addingChannel' })}
         >
