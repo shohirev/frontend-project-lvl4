@@ -81,11 +81,7 @@ const ChannelPanel = () => {
           <PlusSquare
             color="royalblue"
             onClick={() => setModalInfo({ type: 'addingChannel' })}
-          >
-            <span className="visually-hidden">
-              +
-            </span>
-          </PlusSquare>
+          />
         </Button>
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
