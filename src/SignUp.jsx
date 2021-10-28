@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Form, Button,
+  Container, Col, Row, Form, Button,
 } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -43,8 +43,7 @@ const SignUpForm = () => {
         password,
       });
       const { token } = response.data;
-      localStorage.setItem('token', token);
-      auth.logIn();
+      auth.logIn(token, username);
       history.push('/');
     } catch (err) {
       actions.setSubmitting(false);
@@ -73,64 +72,70 @@ const SignUpForm = () => {
         values,
         errors,
       }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Row className="mb-3">
-            <Form.Label htmlFor="username" srOnly>
-              {t('signUpPage.placeholders.username')}
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="username"
-              name="username"
-              placeholder={t('signUpPage.placeholders.username')}
-              value={values.username}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              isValid={touched.username && !errors.username}
-              isInvalid={touched.username && errors.username}
-            />
-            <Form.Control.Feedback type="invalid" tooltip>
-              {errors.username}
-            </Form.Control.Feedback>
-          </Row>
-          <Row className="mb-3">
-            <Form.Label htmlFor="password" srOnly>
-              {t('signUpPage.placeholders.password')}
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="password"
-              name="password"
-              placeholder={t('signUpPage.placeholders.password')}
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              isValid={touched.password && !errors.password}
-              isInvalid={touched.password && errors.password}
-            />
-            <Form.Control.Feedback type="invalid" tooltip>
-              {errors.password}
-            </Form.Control.Feedback>
-          </Row>
-          <Row className="mb-3">
-            <Form.Label htmlFor="confirmPassword" srOnly>
-              {t('signUpPage.placeholders.confirmPassword')}
-            </Form.Label>
-            <Form.Control
-              type="text"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder={t('signUpPage.placeholders.confirmPassword')}
-              value={values.confirmPassword}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              isValid={touched.confirmPassword && !errors.confirmPassword}
-              isInvalid={touched.confirmPassword && errors.confirmPassword}
-            />
-            <Form.Control.Feedback type="invalid" tooltip>
-              {errors.confirmPassword}
-            </Form.Control.Feedback>
-          </Row>
+        <Form onSubmit={handleSubmit}>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="username" srOnly>
+                {t('signUpPage.placeholders.username')}
+              </Form.Label>
+              <Form.Control
+                type="text"
+                id="username"
+                name="username"
+                placeholder={t('signUpPage.placeholders.username')}
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.username && !errors.username}
+                isInvalid={touched.username && errors.username}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.username}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="password" srOnly>
+                {t('signUpPage.placeholders.password')}
+              </Form.Label>
+              <Form.Control
+                type="password"
+                id="password"
+                name="password"
+                placeholder={t('signUpPage.placeholders.password')}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.password && !errors.password}
+                isInvalid={touched.password && errors.password}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.password}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="confirmPassword" srOnly>
+                {t('signUpPage.placeholders.confirmPassword')}
+              </Form.Label>
+              <Form.Control
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder={t('signUpPage.placeholders.confirmPassword')}
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.confirmPassword && !errors.confirmPassword}
+                isInvalid={touched.confirmPassword && errors.confirmPassword}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.confirmPassword}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
           <Button type="submit" variant="outline-primary">
             {t('signUpPage.signUpBtn')}
           </Button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import {
-  Container, Row, Form, Button,
+  Container, Col, Row, Form, Button,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -48,36 +48,45 @@ const AuthorizationForm = () => {
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <Form.Group>
-        <Form.Label htmlFor="username" srOnly>
-          {t('authPage.placeholders.username')}
-        </Form.Label>
-        <Form.Control
-          id="username"
-          name="username"
-          placeholder={t('authPage.placeholders.username')}
-          onChange={formik.handleChange}
-          isInvalid={authFailed}
-          required
-          value={formik.values.username}
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label htmlFor="password" srOnly>
-          {t('authPage.placeholders.password')}
-        </Form.Label>
-        <Form.Control
-          id="password"
-          name="password"
-          placeholder={t('authPage.placeholders.password')}
-          isInvalid={authFailed}
-          onChange={formik.handleChange}
-          required
-          value={formik.values.password}
-        />
-        {feedback}
-      </Form.Group>
-      <Button type="submit">{t('authPage.logInBtn')}</Button>
+      <Form.Row className="mb-3">
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="username" srOnly>
+            {t('authPage.placeholders.username')}
+          </Form.Label>
+          <Form.Control
+            id="username"
+            name="username"
+            placeholder={t('authPage.placeholders.username')}
+            onChange={formik.handleChange}
+            isInvalid={authFailed}
+            required
+            value={formik.values.username}
+          />
+        </Form.Group>
+      </Form.Row>
+      <Form.Row className="mb-3">
+        <Form.Group as={Col}>
+          <Form.Label htmlFor="password" srOnly>
+            {t('authPage.placeholders.password')}
+          </Form.Label>
+          <Form.Control
+            id="password"
+            name="password"
+            type="password"
+            placeholder={t('authPage.placeholders.password')}
+            isInvalid={authFailed}
+            onChange={formik.handleChange}
+            required
+            value={formik.values.password}
+          />
+          {feedback}
+        </Form.Group>
+      </Form.Row>
+      <Form.Row className="mb-3">
+        <Form.Group as={Col}>
+          <Button type="submit" variant="outline-primary" block>{t('authPage.logInBtn')}</Button>
+        </Form.Group>
+      </Form.Row>
     </Form>
   );
 };

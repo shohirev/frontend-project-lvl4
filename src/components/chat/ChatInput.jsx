@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { InputGroup, Button, FormControl } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useSocket } from '../../hooks/index.jsx';
 
@@ -32,25 +32,30 @@ const ChatInput = () => {
   };
 
   return (
-    <InputGroup className="mb-3 mt-auto px-5 py-3">
-      <FormControl
+    <Form
+      inline
+      className="justify-content-center px-5 py-3"
+    >
+      <Form.Label htmlFor="new-message" srOnly />
+      <Form.Control
+        id="new-message"
+        className="w-75"
         value={messageText}
         onChange={handleChange}
         placeholder={t('chatInput.placeholder')}
         data-testid="new-message"
         aria-describedby="newMessageBtn"
       />
-      <InputGroup.Append>
-        <Button
-          aria-label={t('chatInput.sendMessageBtn')}
-          variant="outline-secondary"
-          disabled={isDisabled}
-          onClick={sendMessage}
-        >
-          <ArrowRightSquare />
-        </Button>
-      </InputGroup.Append>
-    </InputGroup>
+      <Button
+        aria-label={t('chatInput.sendMessageBtn')}
+        variant="outline-secondary"
+        type="submit"
+        disabled={isDisabled}
+        onClick={sendMessage}
+      >
+        <ArrowRightSquare />
+      </Button>
+    </Form>
   );
 };
 
