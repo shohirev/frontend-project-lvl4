@@ -18,4 +18,6 @@ if (appContainer) {
   ReactDOM.render(<App socket={io()} />, appContainer);
 }
 
-export default const init = (socketClient) => (<App socket={socketClient} />);
+const init = (socketClient) => (<App socket={socketClient} />);
+
+export default init();
