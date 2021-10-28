@@ -14,6 +14,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 const appContainer = document.querySelector('#chat');
 
-ReactDOM.render(<App socket={io()} />, appContainer);
+if (appContiner) {
+  ReactDOM.render(<App socket={io()} />, appContainer);
+}
 
 export default (socketClient) => (<App socket={socketClient} />);
