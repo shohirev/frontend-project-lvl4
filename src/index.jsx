@@ -20,4 +20,4 @@ if (appContainer) {
 
 const init = (socketClient) => (<App socket={socketClient} />);
 
-export default init();
+export default init;
