@@ -5,6 +5,7 @@ import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { io } from 'socket.io-client';
 import App from './App.jsx';
 
@@ -12,10 +13,26 @@ if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
 }
 
-const appContainer = document.querySelector('#chat');
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production') {
+  const rollbarConfig = {
+    accessToken: process.env.POST_CLIENT_ITEM_ACCESS_TOKEN,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    payload: {
+      environment: 'production',
+    },
+  };
 
-if (appContainer) {
-  ReactDOM.render(<App socket={io()} />, appContainer);
+  const app = (
+    <RollbarProvider config={rollbarConfig}>
+      <ErrorBoundary>
+        <App socket={io()} />
+      </ErrorBoundary>
+    </RollbarProvider>
+  );
+
+  const appContainer = document.querySelector('#chat');
+  ReactDOM.render(app, appContainer);
 }
 
 const init = (socketClient) => (<App socket={socketClient} />);
