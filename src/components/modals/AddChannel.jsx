@@ -24,7 +24,7 @@ const AddChannel = ({ onHide }) => {
       return;
     }
     onHide();
-    socket.emit('newChannel', { name: channelName }, () => {});
+    socket.client.emit('newChannel', { name: channelName }, () => {});
   };
 
   return (

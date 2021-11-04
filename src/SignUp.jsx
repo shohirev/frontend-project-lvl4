@@ -5,6 +5,7 @@ import {
 import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import routes from './routes.js';
@@ -45,11 +46,13 @@ const SignUpForm = () => {
       const { token } = response.data;
       auth.logIn(token, username);
       history.push('/');
-    } catch (err) {
+    } catch (error) {
+      const { status } = error.response;
       actions.setSubmitting(false);
-      const { status } = err.response;
       if (status === 409) {
-        actions.setErrors({ username: t('userDuplication') });
+        actions.setErrors({ username: t('errors.userDuplication') });
+      } else {
+        toast(t('errors.unknown', { type: 'error' }));
       }
     }
   };

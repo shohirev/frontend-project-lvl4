@@ -9,7 +9,7 @@ const RemoveChannel = ({ id, onHide }) => {
 
   const remove = () => {
     onHide();
-    socket.emit('removeChannel', { id }, () => {});
+    socket.client.emit('removeChannel', { id }, () => {});
   };
 
   return (

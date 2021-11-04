@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import {
   Container, Col, Row, Form, Button,
@@ -6,6 +6,7 @@ import {
 import { useFormik } from 'formik';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import routes from './routes.js';
 import { useAuth } from './hooks/index.jsx';
 import Header from './components/Header.jsx';
@@ -13,7 +14,6 @@ import Header from './components/Header.jsx';
 const AuthorizationForm = () => {
   const { t } = useTranslation();
   const auth = useAuth();
-  const [authFailed, setAuthFailed] = useState(false);
   const history = useHistory();
 
   const formik = useFormik({
@@ -21,9 +21,7 @@ const AuthorizationForm = () => {
       username: '',
       password: '',
     },
-    onSubmit: async (values) => {
-      setAuthFailed(false);
-
+    onSubmit: async (values, actions) => {
       try {
         const { username, password } = values;
 
@@ -35,16 +33,15 @@ const AuthorizationForm = () => {
         auth.logIn(token, username);
         history.push('/');
       } catch (error) {
-        setAuthFailed(true);
+        const { status } = error.response;
+        if (status === 401) {
+          actions.setErrors({ authorization: t('errors.authorization') });
+        } else {
+          toast(t('errors.unknown', { type: 'error' }));
+        }
       }
     },
   });
-
-  const feedback = authFailed ? (
-    <Form.Control.Feedback type="invalid" tooltip>
-      {t('errors.authorization')}
-    </Form.Control.Feedback>
-  ) : null;
 
   return (
     <Form onSubmit={formik.handleSubmit}>
@@ -58,7 +55,7 @@ const AuthorizationForm = () => {
             name="username"
             placeholder={t('authPage.placeholders.username')}
             onChange={formik.handleChange}
-            isInvalid={authFailed}
+            isInvalid={formik.errors.authorization}
             required
             value={formik.values.username}
           />
@@ -74,12 +71,14 @@ const AuthorizationForm = () => {
             name="password"
             type="password"
             placeholder={t('authPage.placeholders.password')}
-            isInvalid={authFailed}
+            isInvalid={formik.errors.authorization}
             onChange={formik.handleChange}
             required
             value={formik.values.password}
           />
-          {feedback}
+          <Form.Control.Feedback type="invalid" tooltip>
+            {t('errors.authorization')}
+          </Form.Control.Feedback>
         </Form.Group>
       </Form.Row>
       <Form.Row className="mb-3">

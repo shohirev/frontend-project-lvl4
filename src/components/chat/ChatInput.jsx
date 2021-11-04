@@ -18,7 +18,7 @@ const ChatInput = () => {
   };
 
   const sendMessage = () => {
-    socket.emit(
+    socket.client.emit(
       'newMessage',
       {
         username: localStorage.getItem('username'),

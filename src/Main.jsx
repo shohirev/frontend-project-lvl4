@@ -2,29 +2,27 @@ import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import {
-  addingChannels,
-  addingNewChannel,
-  renamingChannel,
-  removingChannel,
-} from './features/channelsSlice';
-import { addingMessages, addingNewMessage } from './features/messagesSlice.js';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import { addingChannels } from './features/channelsSlice.js';
+import { addingMessages } from './features/messagesSlice.js';
 import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 import routes from './routes.js';
 import Header from './components/Header.jsx';
 import Chat from './components/chat/Chat.jsx';
 import ChannelsPanel from './components/ChannelsPanel.jsx';
-import { useSocket } from './hooks/index.jsx';
+import { useAuth } from './hooks/index.jsx';
 
 const Main = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const socket = useSocket();
+  const auth = useAuth();
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
         const response = await axios.get(routes.data(), {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+          headers: { Authorization: `Bearer ${auth.getToken()}` },
         });
 
         dispatch(addingChannels(response.data.channels));
@@ -33,29 +31,11 @@ const Main = () => {
           (c) => c.name.toLowerCase() === 'general',
         );
         dispatch(changingActiveChannelId(generalChannel.id));
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        toast(t('errors.unknown', { type: 'error' }));
       }
     };
     fetchInitialData();
-
-    socket.on('newChannel', (newChannel) => {
-      dispatch(addingNewChannel(newChannel));
-      dispatch(changingActiveChannelId(newChannel.id));
-    });
-
-    socket.on('renameChannel', (channel) => {
-      dispatch(renamingChannel(channel));
-    });
-
-    socket.on('removeChannel', ({ id }) => {
-      dispatch(removingChannel(id));
-      dispatch(changingActiveChannelId(1));
-    });
-
-    socket.on('newMessage', (m) => {
-      dispatch(addingNewMessage(m));
-    });
   }, []);
 
   return (

@@ -3,11 +3,12 @@
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
 import { io } from 'socket.io-client';
-import App from './App.jsx';
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
+import Chat from './Chat.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -23,18 +24,21 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'producti
     },
   };
 
-  const app = (
+  const socket = io();
+
+  const appContainer = document.querySelector('#chat');
+  const App = (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <App socket={io()} />
+        <Chat socket={socket} />
       </ErrorBoundary>
     </RollbarProvider>
   );
-
-  const appContainer = document.querySelector('#chat');
-  ReactDOM.render(app, appContainer);
+  ReactDOM.render(App, appContainer);
 }
 
-const init = (socketClient) => (<App socket={socketClient} />);
+const init = (socketClient) => (
+  <Chat socket={socketClient} />
+);
 
 export default init;
