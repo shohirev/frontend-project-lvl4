@@ -43,6 +43,12 @@ const AuthorizationForm = () => {
     },
   });
 
+  const feedback = formik.errors.authorization ? (
+    <Form.Control.Feedback type="invalid" tooltip>
+      {t('errors.authorization')}
+    </Form.Control.Feedback>
+  ) : null;
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Row className="mb-3">
@@ -76,9 +82,7 @@ const AuthorizationForm = () => {
             required
             value={formik.values.password}
           />
-          <Form.Control.Feedback type="invalid" tooltip>
-            {t('errors.authorization')}
-          </Form.Control.Feedback>
+          {feedback}
         </Form.Group>
       </Form.Row>
       <Form.Row className="mb-3">
