@@ -116,7 +116,7 @@ const Chat = () => {
   );
 };
 
-export default ({ socket }) => (
+const App = ({ socket }) => (
   <Suspense fallback="loading">
     <Provider store={store}>
       <SocketProvider socket={socket}>
@@ -136,3 +136,5 @@ export default ({ socket }) => (
     </Provider>
   </Suspense>
 );
+
+export default App;
