@@ -37,8 +37,6 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'producti
   ReactDOM.render(App, appContainer);
 }
 
-const init = (socketClient) => (
+export default (socketClient) => (
   <Chat socket={socketClient} />
 );
-
-export default init;
