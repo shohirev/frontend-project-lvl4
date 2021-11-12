@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -9,28 +9,13 @@ import {
 } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
 import { changingActiveChannelId } from '../features/activeChannelIdSlice.js';
-import getModal from './modals/index.js';
-
-const renderModal = (modalInfo, onHide) => {
-  const { id, type } = modalInfo;
-
-  if (!type) {
-    return null;
-  }
-
-  const Modal = getModal(type);
-  return <Modal id={id || null} onHide={onHide} />;
-};
+import { changeModalType } from '../features/modalSlice.js';
 
 const ChannelPanel = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const channels = useSelector((state) => state.channels);
   const activeChannelId = useSelector((state) => state.activeChannelId);
-
-  const [modalInfo, setModalInfo] = useState({});
-  const onHide = () => setModalInfo({ type: null });
-
-  const dispatch = useDispatch();
 
   const panel = channels.map((channel) => {
     const type = channel.id === activeChannelId ? 'secondary' : 'light';
@@ -43,13 +28,13 @@ const ChannelPanel = () => {
       <DropdownButton as={ButtonGroup} variant={type} title="">
         <Dropdown.Item
           eventKey="1"
-          onClick={() => setModalInfo({ id: channel.id, type: 'renamingChannel' })}
+          onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id: channel.id } }))}
         >
           {t('channelsPanel.renameBtn')}
         </Dropdown.Item>
         <Dropdown.Item
           eventKey="2"
-          onClick={() => setModalInfo({ id: channel.id, type: 'removingChannel' })}
+          onClick={() => dispatch(changeModalType({ type: 'removingChannel', modalProps: { id: channel.id } }))}
         >
           {t('channelsPanel.removeBtn')}
         </Dropdown.Item>
@@ -81,11 +66,10 @@ const ChannelPanel = () => {
           role="button"
           color="royalblue"
           aria-label="+"
-          onClick={() => setModalInfo({ type: 'addingChannel' })}
+          onClick={() => dispatch(changeModalType({ type: 'addingChannel', modalProps: {} }))}
         />
       </div>
       <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
-      {renderModal(modalInfo, onHide)}
     </div>
   );
 };

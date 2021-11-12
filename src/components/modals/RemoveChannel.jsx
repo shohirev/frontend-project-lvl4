@@ -1,15 +1,24 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
+import { changeModalType } from '../../features/modalSlice.js';
 
-const RemoveChannel = ({ id, onHide }) => {
+const RemoveChannel = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const socket = useSocket();
 
-  const remove = () => {
+  const id = useSelector((state) => state.modal.modalProps.id);
+
+  const onHide = () => {
+    dispatch(changeModalType({ type: null, modalProps: {} }));
+  };
+
+  const handleSubmit = () => {
     onHide();
-    socket.client.emit('removeChannel', { id }, () => {});
+    socket.emit('removeChannel', { id }, () => {});
   };
 
   return (
@@ -28,7 +37,7 @@ const RemoveChannel = ({ id, onHide }) => {
           >
             {t('modals.remove.cancelBtn')}
           </Button>
-          <Button variant="danger" type="submit" onClick={remove}>
+          <Button variant="danger" type="submit" onClick={handleSubmit}>
             {t('modals.remove.removeBtn')}
           </Button>
         </div>

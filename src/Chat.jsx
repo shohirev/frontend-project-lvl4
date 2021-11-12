@@ -1,47 +1,44 @@
-import React, { Suspense, useState, useEffect } from 'react';
+import React, { Suspense, useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from 'react-router-dom';
-import { Provider, useDispatch } from 'react-redux';
+import { Provider } from 'react-redux';
 import './i18n.js';
 import { ToastContainer } from 'react-toastify';
 import store from './app/store.js';
-import {
-  addingNewChannel,
-  renamingChannel,
-  removingChannel,
-} from './features/channelsSlice.js';
-import { addingNewMessage } from './features/messagesSlice.js';
-import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 import Main from './Main.jsx';
 import AuthPage from './AuthPage.jsx';
 import SignUp from './SignUp.jsx';
 import NotFoundPage from './NotFoundPage.jsx';
 import { authContext, socketContext } from './contexts/index.jsx';
-import { useAuth, useSocket } from './hooks/index.jsx';
+import { useAuth } from './hooks/index.jsx';
+
+const SocketProvider = ({ children, socket }) => (
+  <socketContext.Provider value={socket}>
+    {children}
+  </socketContext.Provider>
+);
 
 const AuthProvider = ({ children }) => {
-  const isAuthorized = localStorage.getItem('token');
-  const [loggedIn, setLoggedIn] = useState(isAuthorized);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
   const logIn = (token, username) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setLoggedIn(true);
+    localStorage.setItem('user', JSON.stringify({ username, token }));
+    setUser({ username, token });
   };
   const logOut = () => {
-    localStorage.removeItem('token');
-    setLoggedIn(false);
+    localStorage.removeItem('user');
+    setUser(null);
   };
-  const getToken = () => localStorage.getItem('token');
+  const getUser = () => user;
 
   return (
     <authContext.Provider
       value={{
-        loggedIn, logIn, logOut, getToken,
+        getUser, logIn, logOut,
       }}
     >
       {children}
@@ -54,74 +51,32 @@ const LoggedInRoute = ({ children }) => {
 
   return (
     <Route
-      render={() => (auth.loggedIn ? children : <Redirect to="/login" />)}
+      render={() => (auth.getUser() ? children : <Redirect to="/login" />)}
     />
   );
 };
 
-const SocketProvider = ({ children, socket }) => {
-  const dispatch = useDispatch();
-
-  const runListeners = () => {
-    socket.on('newChannel', (newChannel) => {
-      dispatch(addingNewChannel(newChannel));
-      dispatch(changingActiveChannelId(newChannel.id));
-    });
-
-    socket.on('renameChannel', (channel) => {
-      dispatch(renamingChannel(channel));
-    });
-
-    socket.on('removeChannel', ({ id }) => {
-      dispatch(removingChannel(id));
-      dispatch(changingActiveChannelId(1));
-    });
-
-    socket.on('newMessage', (m) => {
-      dispatch(addingNewMessage(m));
-    });
-  };
-
-  return (
-    <socketContext.Provider value={{ client: socket, runListeners }}>
-      {children}
-    </socketContext.Provider>
-  );
-};
-
-const Chat = () => {
-  const socket = useSocket();
-
-  useEffect(() => {
-    socket.runListeners();
-  });
-
-  return (
-    <Router>
-      <Switch>
-        <LoggedInRoute exact path="/">
-          <Main />
-        </LoggedInRoute>
-        <Route exact path="/login">
-          <AuthPage />
-        </Route>
-        <Route exact path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="*">
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </Router>
-  );
-};
-
-const App = ({ socket }) => (
+const Chat = ({ socket }) => (
   <Suspense fallback="loading">
     <Provider store={store}>
       <SocketProvider socket={socket}>
         <AuthProvider>
-          <Chat />
+          <Router>
+            <Switch>
+              <LoggedInRoute exact path="/">
+                <Main />
+              </LoggedInRoute>
+              <Route exact path="/login">
+                <AuthPage />
+              </Route>
+              <Route exact path="/signup">
+                <SignUp />
+              </Route>
+              <Route path="*">
+                <NotFoundPage />
+              </Route>
+            </Switch>
+          </Router>
           <ToastContainer
             position="top-right"
             autoClose={false}
@@ -137,4 +92,4 @@ const App = ({ socket }) => (
   </Suspense>
 );
 
-export default App;
+export default Chat;

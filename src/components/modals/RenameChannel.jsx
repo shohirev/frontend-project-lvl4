@@ -1,21 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
+import { changeModalType } from '../../features/modalSlice.js';
 
-const RenameChannel = ({ id, onHide }) => {
+const RenameChannel = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const inputRef = useRef();
-  const channels = useSelector((state) => state.channels);
   const socket = useSocket();
+
+  const channels = useSelector((state) => state.channels);
+  const id = useSelector((state) => state.modal.modalProps.id);
   const currentChannel = channels.find((c) => c.id === id);
   const [newName, setNewName] = useState(currentChannel.name);
+
   const [isInvalidName, setIsInvalidName] = useState(null);
 
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
+  const onHide = () => {
+    dispatch(changeModalType({ type: null, modalProps: {} }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,11 +34,11 @@ const RenameChannel = ({ id, onHide }) => {
       return;
     }
     onHide();
-    socket.client.emit('renameChannel', { id, name: newName }, () => {});
+    socket.emit('renameChannel', { id, name: newName }, () => {});
   };
 
   return (
-    <Modal show centered onHide={onHide}>
+    <Modal show centered backdrop="static" onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{t('modals.rename.title')}</Modal.Title>
       </Modal.Header>
@@ -38,8 +47,8 @@ const RenameChannel = ({ id, onHide }) => {
           <Form.Group>
             <Form.Control
               value={newName}
-              isInvalid={isInvalidName}
               ref={inputRef}
+              isInvalid={isInvalidName}
               required
               data-testid="rename-channel"
               onChange={(e) => setNewName(e.target.value)}

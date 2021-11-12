@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
+import { changeModalType } from '../../features/modalSlice.js';
 
-const AddChannel = ({ onHide }) => {
+const AddChannel = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const socket = useSocket();
   const inputRef = useRef();
   const [channelName, setChannelName] = useState('');
@@ -16,6 +18,10 @@ const AddChannel = ({ onHide }) => {
     inputRef.current.focus();
   }, []);
 
+  const onHide = () => {
+    dispatch(changeModalType({ type: null, modalProps: {} }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -24,7 +30,7 @@ const AddChannel = ({ onHide }) => {
       return;
     }
     onHide();
-    socket.client.emit('newChannel', { name: channelName }, () => {});
+    socket.emit('newChannel', { name: channelName }, () => {});
   };
 
   return (

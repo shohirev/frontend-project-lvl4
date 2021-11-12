@@ -1,6 +1,6 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 const MessageBox = () => {
   const activeChannelId = useSelector((state) => state.activeChannelId);
@@ -9,14 +9,18 @@ const MessageBox = () => {
   const messagesList = messages
     .filter((message) => message.channelId === activeChannelId)
     .map((message) => (
-      <Row key={message.id}>
+      <div key={message.id}>
         <b>{message.username}</b>
         {': '}
         {message.text}
-      </Row>
+      </div>
     ));
 
-  return <Container className="overflow-auto px-5">{messagesList}</Container>;
+  return (
+    <ScrollToBottom className="overflow-auto h-100 px-5">
+      {messagesList}
+    </ScrollToBottom>
+  );
 };
 
 export default MessageBox;

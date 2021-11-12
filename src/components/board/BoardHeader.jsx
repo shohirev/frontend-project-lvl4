@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-const ChatHeader = () => {
+const BoardHeader = () => {
   const channels = useSelector((state) => state.channels);
   const activeChannelId = useSelector((state) => state.activeChannelId);
   const activeChannel = channels.find((c) => c.id === activeChannelId);
@@ -27,4 +27,4 @@ const ChatHeader = () => {
   return header;
 };
 
-export default ChatHeader;
+export default BoardHeader;

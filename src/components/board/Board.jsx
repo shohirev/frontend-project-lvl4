@@ -1,14 +1,14 @@
 import React from 'react';
-import ChatHeader from './ChatHeader.jsx';
+import BoardHeader from './BoardHeader.jsx';
+import BoardInput from './BoardInput.jsx';
 import MessageBox from './MessageBox.jsx';
-import ChatInput from './ChatInput.jsx';
 
-const Chat = () => (
+const Board = () => (
   <div className="h-100 w-100 d-flex flex-column justify-content-between">
-    <ChatHeader />
+    <BoardHeader />
     <MessageBox />
-    <ChatInput />
+    <BoardInput />
   </div>
 );
 
-export default Chat;
+export default Board;

@@ -3,13 +3,14 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, Form } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
-import { useSocket } from '../../hooks/index.jsx';
+import { useSocket, useAuth } from '../../hooks/index.jsx';
 
-const ChatInput = () => {
+const BoardInput = () => {
   const { t } = useTranslation();
   const [messageText, setMessageText] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
   const currentChannel = useSelector((state) => state.activeChannelId);
+  const auth = useAuth();
   const socket = useSocket();
 
   const handleChange = (event) => {
@@ -18,10 +19,11 @@ const ChatInput = () => {
   };
 
   const sendMessage = () => {
-    socket.client.emit(
+    const { username } = auth.getUser();
+    socket.emit(
       'newMessage',
       {
-        username: localStorage.getItem('username'),
+        username,
         text: messageText,
         channelId: currentChannel,
       },
@@ -59,4 +61,4 @@ const ChatInput = () => {
   );
 };
 
-export default ChatInput;
+export default BoardInput;

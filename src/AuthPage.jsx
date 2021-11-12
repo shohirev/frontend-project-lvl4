@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import {
-  Container, Col, Row, Form, Button,
+  Container, Col, Row, Form, Button, Spinner,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import axios from 'axios';
@@ -49,6 +49,12 @@ const AuthorizationForm = () => {
     </Form.Control.Feedback>
   ) : null;
 
+  if (formik.isSubmitting) {
+    return (
+      <Spinner animation="border" variant="primary" />
+    );
+  }
+
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Row className="mb-3">
@@ -87,7 +93,7 @@ const AuthorizationForm = () => {
       </Form.Row>
       <Form.Row className="mb-3">
         <Form.Group as={Col}>
-          <Button type="submit" variant="outline-primary" block>{t('authPage.logInBtn')}</Button>
+          <Button type="submit" variant="outline-primary" disabled={formik.isSubmitting} block>{t('authPage.logInBtn')}</Button>
         </Form.Group>
       </Form.Row>
     </Form>
