@@ -1,63 +1,68 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Button, Form } from 'react-bootstrap';
+import { Formik } from 'formik';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
-import { useSocket, useAuth } from '../../hooks/index.jsx';
+import { getActiveChannelId } from '../../features/selectors.js';
+import { useSocketAPI, useAuth } from '../../hooks/index.jsx';
 
 const BoardInput = () => {
   const { t } = useTranslation();
-  const [messageText, setMessageText] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
-  const currentChannel = useSelector((state) => state.activeChannelId);
+  const channelId = useSelector(getActiveChannelId);
   const auth = useAuth();
-  const socket = useSocket();
+  const { sendMessage } = useSocketAPI();
 
-  const handleChange = (event) => {
-    setMessageText(event.target.value);
-    setIsDisabled(false);
-  };
-
-  const sendMessage = () => {
+  const handler = (values, actions) => {
     const { username } = auth.getUser();
-    socket.emit(
-      'newMessage',
-      {
-        username,
-        text: messageText,
-        channelId: currentChannel,
-      },
-      () => {},
-    );
-    setMessageText('');
-    setIsDisabled(true);
+    const { text } = values;
+    const messageData = {
+      username,
+      text,
+      channelId,
+    };
+    sendMessage(messageData);
+    actions.resetForm();
   };
 
   return (
-    <Form
-      inline
-      className="justify-content-center px-5 py-3"
+    <Formik
+      initialValues={{ text: '' }}
+      onSubmit={handler}
     >
-      <Form.Label htmlFor="new-message" srOnly />
-      <Form.Control
-        id="new-message"
-        className="w-75"
-        value={messageText}
-        onChange={handleChange}
-        placeholder={t('chatInput.placeholder')}
-        data-testid="new-message"
-        aria-describedby="newMessageBtn"
-      />
-      <Button
-        aria-label={t('chatInput.sendMessageBtn')}
-        variant="outline-secondary"
-        type="submit"
-        disabled={isDisabled}
-        onClick={sendMessage}
-      >
-        <ArrowRightSquare />
-      </Button>
-    </Form>
+      {({
+        values,
+        handleChange,
+        handleSubmit,
+        isSubmitting,
+      }) => (
+        <Form
+          inline
+          className="justify-content-center px-5 py-3"
+          onSubmit={handleSubmit}
+        >
+          <Form.Label htmlFor="new-message" srOnly />
+          <Form.Control
+            id="text"
+            name="text"
+            className="w-75"
+            value={values.text}
+            onChange={handleChange}
+            placeholder={t('chatInput.placeholder')}
+            data-testid="new-message"
+            aria-describedby="newMessageBtn"
+          />
+          <Button
+            aria-label={t('chatInput.sendMessageBtn')}
+            variant="outline-secondary"
+            type="submit"
+            disabled={isSubmitting || values.text === ''}
+          >
+            <ArrowRightSquare />
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

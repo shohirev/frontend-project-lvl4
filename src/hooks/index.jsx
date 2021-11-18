@@ -3,4 +3,4 @@ import { authContext, socketContext } from '../contexts/index.jsx';
 
 export const useAuth = () => useContext(authContext);
 
-export const useSocket = () => useContext(socketContext);
+export const useSocketAPI = () => useContext(socketContext);

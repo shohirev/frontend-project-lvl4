@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
+import { Formik } from 'formik';
+import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { useSocket } from '../../hooks/index.jsx';
+import { useSocketAPI } from '../../hooks/index.jsx';
 import { changeModalType } from '../../features/modalSlice.js';
+import { getChannelsNames } from '../../features/selectors.js';
 
 const AddChannel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const socket = useSocket();
+  const { sendChannel } = useSocketAPI();
   const inputRef = useRef();
-  const [channelName, setChannelName] = useState('');
-  const [isInvalidName, setIsInvalidName] = useState(null);
-  const channels = useSelector((state) => state.channels);
+  const channels = useSelector(getChannelsNames);
 
   useEffect(() => {
     inputRef.current.focus();
@@ -22,15 +23,14 @@ const AddChannel = () => {
     dispatch(changeModalType({ type: null, modalProps: {} }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validationSchema = yup.object().shape({
+    channelName: yup.mixed().notOneOf(channels),
+  });
 
-    if (channels.find((c) => c.name === channelName)) {
-      setIsInvalidName(true);
-      return;
-    }
+  const handler = (values) => {
+    const { channelName } = values;
+    sendChannel({ name: channelName });
     onHide();
-    socket.emit('newChannel', { name: channelName }, () => {});
   };
 
   return (
@@ -39,36 +39,50 @@ const AddChannel = () => {
         <Modal.Title>{t('modals.add.title')}</Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex flex-column justify-content-around">
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              value={channelName}
-              ref={inputRef}
-              isInvalid={isInvalidName}
-              required
-              data-testid="add-channel"
-              onChange={(e) => {
-                setChannelName(e.target.value);
-              }}
-            />
-            <Form.Control.Feedback type="invalid">
-              {t('errors.channelDuplication')}
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="d-flex justify-content-end">
-            <Button
-              variant="secondary"
-              className="mr-2"
-              type="submit"
-              onClick={onHide}
-            >
-              {t('modals.add.cancelBtn')}
-            </Button>
-            <Button variant="primary" type="submit">
-              {t('modals.add.sendBtn')}
-            </Button>
-          </Form.Group>
-        </Form>
+        <Formik
+          initialValues={{ channelName: '' }}
+          validationSchema={validationSchema}
+          validateOnChange={false}
+          validateOnBlur={false}
+          onSubmit={handler}
+        >
+          {({
+            values, handleChange, handleSubmit, errors,
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <Form.Group>
+                <Form.Control
+                  id="channelName"
+                  name="channelName"
+                  value={values.channelName}
+                  ref={inputRef}
+                  isInvalid={errors.channelName}
+                  required
+                  data-testid="add-channel"
+                  onChange={handleChange}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {t('errors.channelDuplication')}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="d-flex justify-content-end">
+                <Button
+                  variant="secondary"
+                  className="mr-2"
+                  onClick={onHide}
+                >
+                  {t('modals.add.cancelBtn')}
+                </Button>
+                <Button
+                  variant="primary"
+                  type="submit"
+                >
+                  {t('modals.add.sendBtn')}
+                </Button>
+              </Form.Group>
+            </Form>
+          )}
+        </Formik>
       </Modal.Body>
     </Modal>
   );

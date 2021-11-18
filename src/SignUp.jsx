@@ -75,84 +75,76 @@ const SignUpForm = () => {
         values,
         isSubmitting,
         errors,
-      }) => {
-        if (isSubmitting) {
-          return (
-            <Spinner animation="border" variant="primary" />
-          );
-        }
-
-        return (
-          <Form onSubmit={handleSubmit}>
-            <Form.Row className="mb-3">
-              <Form.Group as={Col}>
-                <Form.Label htmlFor="username" srOnly>
-                  {t('signUpPage.placeholders.username')}
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder={t('signUpPage.placeholders.username')}
-                  value={values.username}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isValid={touched.username && !errors.username}
-                  isInvalid={touched.username && errors.username}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.username}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-              <Form.Group as={Col}>
-                <Form.Label htmlFor="password" srOnly>
-                  {t('signUpPage.placeholders.password')}
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder={t('signUpPage.placeholders.password')}
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isValid={touched.password && !errors.password}
-                  isInvalid={touched.password && errors.password}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.password}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Form.Row className="mb-3">
-              <Form.Group as={Col}>
-                <Form.Label htmlFor="confirmPassword" srOnly>
-                  {t('signUpPage.placeholders.confirmPassword')}
-                </Form.Label>
-                <Form.Control
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  placeholder={t('signUpPage.placeholders.confirmPassword')}
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  isValid={touched.confirmPassword && !errors.confirmPassword}
-                  isInvalid={touched.confirmPassword && errors.confirmPassword}
-                />
-                <Form.Control.Feedback type="invalid" tooltip>
-                  {errors.confirmPassword}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Form.Row>
-            <Button type="submit" disabled={isSubmitting} variant="outline-primary" block>
-              {t('signUpPage.signUpBtn')}
-            </Button>
-          </Form>
-        );
-      }}
+      }) => (
+        <Form onSubmit={handleSubmit}>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="username" srOnly>
+                {t('signUpPage.placeholders.username')}
+              </Form.Label>
+              <Form.Control
+                type="text"
+                id="username"
+                name="username"
+                placeholder={t('signUpPage.placeholders.username')}
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.username && !errors.username}
+                isInvalid={touched.username && errors.username}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.username}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="password" srOnly>
+                {t('signUpPage.placeholders.password')}
+              </Form.Label>
+              <Form.Control
+                type="password"
+                id="password"
+                name="password"
+                placeholder={t('signUpPage.placeholders.password')}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.password && !errors.password}
+                isInvalid={touched.password && errors.password}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.password}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Form.Row className="mb-3">
+            <Form.Group as={Col}>
+              <Form.Label htmlFor="confirmPassword" srOnly>
+                {t('signUpPage.placeholders.confirmPassword')}
+              </Form.Label>
+              <Form.Control
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder={t('signUpPage.placeholders.confirmPassword')}
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isValid={touched.confirmPassword && !errors.confirmPassword}
+                isInvalid={touched.confirmPassword && errors.confirmPassword}
+              />
+              <Form.Control.Feedback type="invalid" tooltip>
+                {errors.confirmPassword}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Form.Row>
+          <Button type="submit" disabled={isSubmitting} variant="outline-primary" block>
+            {isSubmitting ? <Spinner animation="border" variant="primary" /> : t('signUpPage.signUpBtn')}
+          </Button>
+        </Form>
+      )}
     </Formik>
   );
 };

@@ -49,12 +49,6 @@ const AuthorizationForm = () => {
     </Form.Control.Feedback>
   ) : null;
 
-  if (formik.isSubmitting) {
-    return (
-      <Spinner animation="border" variant="primary" />
-    );
-  }
-
   return (
     <Form onSubmit={formik.handleSubmit}>
       <Form.Row className="mb-3">
@@ -93,7 +87,9 @@ const AuthorizationForm = () => {
       </Form.Row>
       <Form.Row className="mb-3">
         <Form.Group as={Col}>
-          <Button type="submit" variant="outline-primary" disabled={formik.isSubmitting} block>{t('authPage.logInBtn')}</Button>
+          <Button type="submit" variant="outline-primary" disabled={formik.isSubmitting} block>
+            {formik.isSubmitting ? <Spinner animation="border" variant="primary" /> : t('authPage.logInBtn')}
+          </Button>
         </Form.Group>
       </Form.Row>
     </Form>

@@ -16,8 +16,8 @@ import NotFoundPage from './NotFoundPage.jsx';
 import { authContext, socketContext } from './contexts/index.jsx';
 import { useAuth } from './hooks/index.jsx';
 
-const SocketProvider = ({ children, socket }) => (
-  <socketContext.Provider value={socket}>
+const SocketAPIProvider = ({ children, socketAPI }) => (
+  <socketContext.Provider value={socketAPI}>
     {children}
   </socketContext.Provider>
 );
@@ -56,10 +56,10 @@ const LoggedInRoute = ({ children }) => {
   );
 };
 
-const Chat = ({ socket }) => (
+const Chat = ({ socketAPI }) => (
   <Suspense fallback="loading">
     <Provider store={store}>
-      <SocketProvider socket={socket}>
+      <SocketAPIProvider socketAPI={socketAPI}>
         <AuthProvider>
           <Router>
             <Switch>
@@ -87,7 +87,7 @@ const Chat = ({ socket }) => (
             draggable
           />
         </AuthProvider>
-      </SocketProvider>
+      </SocketAPIProvider>
     </Provider>
   </Suspense>
 );

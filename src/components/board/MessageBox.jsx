@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import ScrollToBottom from 'react-scroll-to-bottom';
+import { getMessagesByChannel } from '../../features/selectors.js';
 
 const MessageBox = () => {
-  const activeChannelId = useSelector((state) => state.activeChannelId);
-  const messages = useSelector((state) => state.messages);
-
-  const messagesList = messages
-    .filter((message) => message.channelId === activeChannelId)
+  const messagesList = useSelector(getMessagesByChannel)
     .map((message) => (
       <div key={message.id}>
         <b>{message.username}</b>
@@ -16,10 +12,17 @@ const MessageBox = () => {
       </div>
     ));
 
+  const fakeEntry = useRef(null);
+
+  useEffect(() => {
+    fakeEntry.current.scrollIntoView({ behavior: 'smooth' });
+  });
+
   return (
-    <ScrollToBottom className="overflow-auto h-100 px-5">
+    <div className="overflow-auto h-100 px-5">
       {messagesList}
-    </ScrollToBottom>
+      <span ref={fakeEntry} />
+    </div>
   );
 };
 

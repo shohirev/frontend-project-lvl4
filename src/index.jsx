@@ -1,5 +1,4 @@
 // @ts-check
-
 import 'core-js/stable/index.js';
 import 'regenerator-runtime/runtime.js';
 import '../assets/application.scss';
@@ -9,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { io } from 'socket.io-client';
 import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react';
-import initSocket from './initSocket';
+import buildSocketAPI from './socketAPI.js';
 import Chat from './Chat.jsx';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -26,25 +25,19 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'producti
     },
   };
 
-  const socket = io();
-  initSocket(socket);
-
   const appContainer = document.querySelector('#chat');
   const App = (
     <RollbarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <Chat socket={socket} />
+        <Chat socketAPI={buildSocketAPI(io())} />
       </ErrorBoundary>
     </RollbarProvider>
   );
   ReactDOM.render(App, appContainer);
 }
 
-const init = (socketClient) => {
-  initSocket(socketClient);
-  return (
-    <Chat socket={socketClient} />
-  );
-};
+const init = (socketClient) => (
+  <Chat socketAPI={buildSocketAPI(socketClient)} />
+);
 
 export default init;

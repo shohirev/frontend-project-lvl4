@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import Loader from 'react-loader-spinner';
+import { getLoadingProcess } from './features/selectors.js';
 import fetchData from './features/fetchData.js';
 import Header from './components/Header.jsx';
 import Board from './components/board/Board.jsx';
@@ -25,7 +26,7 @@ const Main = () => {
     }
   }, []);
 
-  const loadingProcess = useSelector((state) => state.loading);
+  const loadingProcess = useSelector(getLoadingProcess);
 
   const content = loadingProcess === 'pending' ? (
     <Loader

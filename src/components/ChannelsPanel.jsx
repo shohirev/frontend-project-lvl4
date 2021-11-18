@@ -10,12 +10,13 @@ import {
 import { PlusSquare } from 'react-bootstrap-icons';
 import { changingActiveChannelId } from '../features/activeChannelIdSlice.js';
 import { changeModalType } from '../features/modalSlice.js';
+import { getChannels, getActiveChannelId } from '../features/selectors.js';
 
 const ChannelPanel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const channels = useSelector((state) => state.channels);
-  const activeChannelId = useSelector((state) => state.activeChannelId);
+  const channels = useSelector(getChannels);
+  const activeChannelId = useSelector(getActiveChannelId);
 
   const panel = channels.map((channel) => {
     const type = channel.id === activeChannelId ? 'secondary' : 'light';
