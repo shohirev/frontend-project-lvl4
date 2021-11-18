@@ -1,9 +1,9 @@
 import { createSelector } from '@reduxjs/toolkit';
 
 export const getLoadingProcess = (state) => state.loading;
-export const getChannels = (state) => state.channels;
+export const getChannels = (state) => state.channels.channelsData;
 export const getMessages = (state) => state.messages;
-export const getActiveChannelId = (state) => state.activeChannelId;
+export const getActiveChannelId = (state) => state.channels.activeId;
 export const getModalState = (state) => state.modal;
 
 export const getActiveChannel = createSelector(

@@ -3,9 +3,9 @@ import {
   addingNewChannel,
   renamingChannel,
   removingChannel,
+  changingActiveChannelId,
 } from './features/channelsSlice.js';
 import { addingNewMessage } from './features/messagesSlice.js';
-import { changingActiveChannelId } from './features/activeChannelIdSlice.js';
 
 const initSocket = (socketClient) => {
   socketClient.on('newChannel', (newChannel) => {

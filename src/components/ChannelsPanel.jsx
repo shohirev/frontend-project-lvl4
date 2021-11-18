@@ -8,7 +8,7 @@ import {
   DropdownButton,
 } from 'react-bootstrap';
 import { PlusSquare } from 'react-bootstrap-icons';
-import { changingActiveChannelId } from '../features/activeChannelIdSlice.js';
+import { changingActiveChannelId } from '../features/channelsSlice.js';
 import { changeModalType } from '../features/modalSlice.js';
 import { getChannels, getActiveChannelId } from '../features/selectors.js';
 
