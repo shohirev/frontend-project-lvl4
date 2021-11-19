@@ -23,7 +23,8 @@ const SocketAPIProvider = ({ children, socketAPI }) => (
 );
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const initAuthData = () => JSON.parse(localStorage.getItem('user'));
+  const [user, setUser] = useState(initAuthData);
 
   const logIn = (token, username) => {
     localStorage.setItem('user', JSON.stringify({ username, token }));
@@ -48,10 +49,11 @@ const AuthProvider = ({ children }) => {
 
 const LoggedInRoute = ({ children }) => {
   const auth = useAuth();
+  const isLoggedIn = auth.getUser();
 
   return (
     <Route
-      render={() => (auth.getUser() ? children : <Redirect to="/login" />)}
+      render={() => (isLoggedIn ? children : <Redirect to="/login" />)}
     />
   );
 };

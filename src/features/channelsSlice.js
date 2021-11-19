@@ -14,9 +14,7 @@ export const channelsSlice = createSlice({
   reducers: {
     addingNewChannel: ({ channelsData }, action) => {
       const newChannel = action.payload;
-      if (!channelsData.find((channel) => channel.id === newChannel.id)) {
-        channelsData.push(newChannel);
-      }
+      channelsData.push(newChannel);
     },
     renamingChannel: ({ channelsData }, action) => {
       const newName = action.payload.name;
@@ -34,11 +32,7 @@ export const channelsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchData.fulfilled, (state, action) => {
       const loadedChannels = action.payload.channels;
-      loadedChannels.forEach((channel) => {
-        if (!state.channelsData.find((c) => c.id === channel.id)) {
-          state.channelsData.push(channel);
-        }
-      });
+      state.channelsData = loadedChannels;
       state.activeId = action.payload.currentChannelId;
     });
   },

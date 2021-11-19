@@ -1,21 +1,15 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSocketAPI } from '../../hooks/index.jsx';
-import { changeModalType } from '../../features/modalSlice.js';
 import { getModalState } from '../../features/selectors.js';
 
-const RemoveChannel = () => {
+const RemoveChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { removeChannel } = useSocketAPI();
 
   const { id } = useSelector(getModalState).modalProps;
-
-  const onHide = () => {
-    dispatch(changeModalType({ type: null, modalProps: {} }));
-  };
 
   const handleSubmit = () => {
     onHide();

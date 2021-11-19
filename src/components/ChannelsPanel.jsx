@@ -12,52 +12,63 @@ import { changingActiveChannelId } from '../features/channelsSlice.js';
 import { changeModalType } from '../features/modalSlice.js';
 import { getChannels, getActiveChannelId } from '../features/selectors.js';
 
+const ChannelBtn = ({ channel }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const activeChannelId = useSelector(getActiveChannelId);
+  const { id, name, removable } = channel;
+
+  const type = id === activeChannelId ? 'secondary' : 'light';
+
+  const dropdown = (
+    <DropdownButton as={ButtonGroup} variant={type} title="">
+      <Dropdown.Item
+        eventKey="1"
+        onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id } }))}
+      >
+        {t('channelsPanel.renameBtn')}
+      </Dropdown.Item>
+      <Dropdown.Item
+        eventKey="2"
+        onClick={() => dispatch(changeModalType({ type: 'removingChannel', modalProps: { id } }))}
+      >
+        {t('channelsPanel.removeBtn')}
+      </Dropdown.Item>
+    </DropdownButton>
+  );
+
+  return (
+    <ButtonGroup className="w-100">
+      <Button
+        variant={type}
+        className="btn w-100 rounded-0 text-left text-truncate"
+        onClick={() => dispatch(changingActiveChannelId(id))}
+      >
+        #
+        {name}
+      </Button>
+      {removable && dropdown}
+    </ButtonGroup>
+  );
+};
+
+const ChannelsList = () => {
+  const channels = useSelector(getChannels);
+
+  const channelsList = channels.map((channel) => (
+    <li key={channel.id} className="nav-item w-100">
+      <ChannelBtn channel={channel} />
+    </li>
+  ));
+
+  return (
+    <ul className="nav flex-column nav-pills nav-fill px-2">{channelsList}</ul>
+  );
+};
+
 const ChannelPanel = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const channels = useSelector(getChannels);
-  const activeChannelId = useSelector(getActiveChannelId);
-
-  const panel = channels.map((channel) => {
-    const type = channel.id === activeChannelId ? 'secondary' : 'light';
-
-    const handler = () => {
-      dispatch(changingActiveChannelId(channel.id));
-    };
-
-    const dropdownBtns = channel.removable ? (
-      <DropdownButton as={ButtonGroup} variant={type} title="">
-        <Dropdown.Item
-          eventKey="1"
-          onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id: channel.id } }))}
-        >
-          {t('channelsPanel.renameBtn')}
-        </Dropdown.Item>
-        <Dropdown.Item
-          eventKey="2"
-          onClick={() => dispatch(changeModalType({ type: 'removingChannel', modalProps: { id: channel.id } }))}
-        >
-          {t('channelsPanel.removeBtn')}
-        </Dropdown.Item>
-      </DropdownButton>
-    ) : null;
-
-    return (
-      <li key={channel.id} className="nav-item w-100">
-        <ButtonGroup className="w-100">
-          <Button
-            variant={type}
-            className="btn w-100 rounded-0 text-left text-truncate"
-            onClick={handler}
-          >
-            #
-            {channel.name}
-          </Button>
-          {dropdownBtns}
-        </ButtonGroup>
-      </li>
-    );
-  });
 
   return (
     <div>
@@ -70,7 +81,7 @@ const ChannelPanel = () => {
           onClick={() => dispatch(changeModalType({ type: 'addingChannel', modalProps: {} }))}
         />
       </div>
-      <ul className="nav flex-column nav-pills nav-fill px-2">{panel}</ul>
+      <ChannelsList />
     </div>
   );
 };

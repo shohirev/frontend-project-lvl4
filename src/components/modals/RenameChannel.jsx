@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useSocketAPI } from '../../hooks/index.jsx';
-import { changeModalType } from '../../features/modalSlice.js';
 import { getModalState, getChannelById, getChannelsNames } from '../../features/selectors.js';
 
-const RenameChannel = () => {
+const RenameChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const inputRef = useRef();
   const { sendNewChannelName } = useSocketAPI();
 
@@ -21,10 +19,6 @@ const RenameChannel = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  const onHide = () => {
-    dispatch(changeModalType({ type: null, modalProps: {} }));
-  };
 
   const validationSchema = yup.object().shape({
     channelName: yup.mixed().notOneOf(channels),

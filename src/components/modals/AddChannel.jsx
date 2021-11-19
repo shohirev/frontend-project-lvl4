@@ -1,16 +1,14 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Modal, Form, Button } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { useSocketAPI } from '../../hooks/index.jsx';
-import { changeModalType } from '../../features/modalSlice.js';
 import { getChannelsNames } from '../../features/selectors.js';
 
-const AddChannel = () => {
+const AddChannel = ({ onHide }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const { sendChannel } = useSocketAPI();
   const inputRef = useRef();
   const channels = useSelector(getChannelsNames);
@@ -18,10 +16,6 @@ const AddChannel = () => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
-
-  const onHide = () => {
-    dispatch(changeModalType({ type: null, modalProps: {} }));
-  };
 
   const validationSchema = yup.object().shape({
     channelName: yup.mixed().notOneOf(channels),
