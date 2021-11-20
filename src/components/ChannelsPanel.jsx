@@ -21,7 +21,7 @@ const ChannelBtn = ({ channel }) => {
   const type = id === activeChannelId ? 'secondary' : 'light';
 
   const dropdown = (
-    <DropdownButton as={ButtonGroup} variant={type} title="">
+    <DropdownButton as={ButtonGroup} variant={type} title="" aria-label={t('testLabels.channelControl')}>
       <Dropdown.Item
         eventKey="1"
         onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id } }))}

@@ -68,6 +68,7 @@
   },
   "testLabels": {
     "messageInput": "Новое сообщение",
+    "channelControl": "Управление каналом",
     "newChannelInput": "Имя канала",
     "renameChannelInput": "Новое имя канала"
   }
