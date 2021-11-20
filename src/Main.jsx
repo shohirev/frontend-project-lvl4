@@ -19,8 +19,8 @@ const Main = () => {
 
   useEffect(async () => {
     try {
-      const { token } = auth.getUser();
-      await dispatch(fetchData(token)).unwrap();
+      const headers = auth.getHeaders();
+      await dispatch(fetchData(headers)).unwrap();
     } catch (error) {
       toast(t('errors.unknown', { type: 'error' }));
     }

@@ -35,11 +35,12 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
   const getUser = () => user;
+  const getHeaders = () => ({ Authorization: `Bearer ${user.token}` });
 
   return (
     <authContext.Provider
       value={{
-        getUser, logIn, logOut,
+        getUser, getHeaders, logIn, logOut,
       }}
     >
       {children}
