@@ -22,20 +22,22 @@ const ChannelBtn = ({ channel }) => {
 
   const dropdown = (
     <DropdownButton as={ButtonGroup} variant={type} title="" aria-label={t('testLabels.channelControl')}>
-      <Button
+      <Dropdown.Item
+        as="button"
         eventKey="1"
         onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id } }))}
         aria-label={t('testLabels.renameChannelBtn')}
       >
         {t('channelsPanel.renameBtn')}
-      </Button>
-      <Button
+      </Dropdown.Item>
+      <Dropdown.Item
+        as="button"
         eventKey="2"
         onClick={() => dispatch(changeModalType({ type: 'removingChannel', modalProps: { id } }))}
         aria-label={t('testLabels.removeChannelBtn')}
       >
         {t('channelsPanel.removeBtn')}
-      </Button>
+      </Dropdown.Item>
     </DropdownButton>
   );
 
