@@ -25,6 +25,7 @@ const ChannelBtn = ({ channel }) => {
       <Dropdown.Item
         eventKey="1"
         onClick={() => dispatch(changeModalType({ type: 'renamingChannel', modalProps: { id } }))}
+        aria-label={t('testLabels.renameChannelBtn')}
       >
         {t('channelsPanel.renameBtn')}
       </Dropdown.Item>
