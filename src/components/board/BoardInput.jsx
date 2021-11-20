@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Form } from 'react-bootstrap';
 import { Formik } from 'formik';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
+import filter from 'leo-profanity';
 import { getActiveChannelId } from '../../features/selectors.js';
 import { useSocketAPI, useAuth } from '../../hooks/index.jsx';
 
@@ -15,7 +16,7 @@ const BoardInput = () => {
 
   const handler = (values, actions) => {
     const { username } = auth.getUser();
-    const { text } = values;
+    const text = filter.clean(values.text);
     const messageData = {
       username,
       text,
