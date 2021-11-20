@@ -53,6 +53,7 @@ const AddChannel = ({ onHide }) => {
                   isInvalid={errors.channelName}
                   required
                   data-testid="add-channel"
+                  aria-label={t('testLabels.newChannelInput')}
                   onChange={handleChange}
                 />
                 <Form.Control.Feedback type="invalid">

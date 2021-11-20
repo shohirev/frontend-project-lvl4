@@ -51,6 +51,7 @@ const BoardInput = () => {
             placeholder={t('chatInput.placeholder')}
             data-testid="new-message"
             aria-describedby="newMessageBtn"
+            aria-label={t('testLabels.messageInput')}
           />
           <Button
             aria-label={t('chatInput.sendMessageBtn')}

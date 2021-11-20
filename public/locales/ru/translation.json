@@ -65,5 +65,10 @@
     "userDuplication": "Такой пользователь уже существует",
     "channelDuplication": "Такой канал уже существует",
     "unknown": "Ошибка! Попробуйте позже..."
+  },
+  "testLabels": {
+    "messageInput": "Новое сообщение",
+    "newChannelInput": "Имя канала",
+    "renameChannelInput": "Новое имя канала"
   }
 }

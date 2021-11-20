@@ -57,6 +57,7 @@ const RenameChannel = ({ onHide }) => {
                   isInvalid={errors.newName}
                   required
                   data-testid="rename-channel"
+                  label-text={t('testLabels.renameChannelInput')}
                 />
                 <Form.Control.Feedback type="invalid">
                   {t('errors.channelDuplication')}
