@@ -32,6 +32,7 @@ const ChannelBtn = ({ channel }) => {
       <Dropdown.Item
         eventKey="2"
         onClick={() => dispatch(changeModalType({ type: 'removingChannel', modalProps: { id } }))}
+        aria-label={t('testLabels.removeChannelBtn')}
       >
         {t('channelsPanel.removeBtn')}
       </Dropdown.Item>

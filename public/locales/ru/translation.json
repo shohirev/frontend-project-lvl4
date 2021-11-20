@@ -71,6 +71,7 @@
     "channelControl": "Управление каналом",
     "newChannelInput": "Имя канала",
     "renameChannelInput": "Новое имя канала",
-    "renameChannelBtn": "Переименовать"
+    "renameChannelBtn": "Переименовать",
+    "removeChannelBtn": "Удалить"
   }
 }
